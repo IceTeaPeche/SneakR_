@@ -1,0 +1,58 @@
+{
+  "kind": "collectionType",
+  "collectionName": "sneackers",
+  "info": {
+    "singularName": "sneacker",
+    "pluralName": "sneackers",
+    "displayName": "sneacker",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "brand": {
+      "type": "string"
+    },
+    "colorway": {
+      "type": "string"
+    },
+    "estimatedMarketValue": {
+      "type": "string"
+    },
+    "gender": {
+      "type": "string"
+    },
+    "image": {
+      "type": "string"
+    },
+    "links": {
+      "type": "string"
+    },
+    "name": {
+      "type": "string"
+    },
+    "retailPrice": {
+      "type": "string"
+    },
+    "silhouette": {
+      "type": "string"
+    },
+    "sku": {
+      "type": "string"
+    },
+    "story": {
+      "type": "string"
+    },
+    "UID": {
+      "type": "string"
+    },
+    "releaseDate": {
+      "type": "date"
+    },
+    "releaseYear": {
+      "type": "date"
+    }
+  }
+}
