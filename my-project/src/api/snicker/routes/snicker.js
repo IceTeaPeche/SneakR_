@@ -1,9 +1,9 @@
 'use strict';
 
 /**
- * sneacker router
+ * snicker router
  */
 
 const { createCoreRouter } = require('@strapi/strapi').factories;
 
-module.exports = createCoreRouter('api::sneacker.sneacker');
+module.exports = createCoreRouter('api::snicker.snicker');

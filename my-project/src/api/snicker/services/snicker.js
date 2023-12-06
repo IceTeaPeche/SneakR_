@@ -1,9 +1,9 @@
 'use strict';
 
 /**
- * sneacker service
+ * snicker service
  */
 
 const { createCoreService } = require('@strapi/strapi').factories;
 
-module.exports = createCoreService('api::sneacker.sneacker');
+module.exports = createCoreService('api::snicker.snicker');

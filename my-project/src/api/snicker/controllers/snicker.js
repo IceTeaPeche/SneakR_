@@ -1,9 +1,9 @@
 'use strict';
 
 /**
- * sneacker controller
+ * snicker controller
  */
 
 const { createCoreController } = require('@strapi/strapi').factories;
 
-module.exports = createCoreController('api::sneacker.sneacker');
+module.exports = createCoreController('api::snicker.snicker');

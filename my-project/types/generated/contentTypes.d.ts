@@ -362,13 +362,12 @@ export interface AdminTransferTokenPermission extends Schema.CollectionType {
   };
 }
 
-export interface ApiSneackerSneacker extends Schema.CollectionType {
-  collectionName: 'sneackers';
+export interface ApiSnickerSnicker extends Schema.CollectionType {
+  collectionName: 'snickers';
   info: {
-    singularName: 'sneacker';
-    pluralName: 'sneackers';
-    displayName: 'sneacker';
-    description: '';
+    singularName: 'snicker';
+    pluralName: 'snickers';
+    displayName: 'snicker';
   };
   options: {
     draftAndPublish: true;
@@ -376,29 +375,24 @@ export interface ApiSneackerSneacker extends Schema.CollectionType {
   attributes: {
     brand: Attribute.String;
     colorway: Attribute.String;
-    estimatedMarketValue: Attribute.String;
     gender: Attribute.String;
-    image: Attribute.String;
-    links: Attribute.String;
+    links: Attribute.JSON;
     name: Attribute.String;
-    retailPrice: Attribute.String;
     silhouette: Attribute.String;
-    sku: Attribute.String;
-    story: Attribute.String;
-    UID: Attribute.String;
-    releaseDate: Attribute.Date;
-    releaseYear: Attribute.Date;
+    retailPrice: Attribute.Float;
+    estimatedMarketValue: Attribute.Float;
+    image: Attribute.JSON;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;
     createdBy: Attribute.Relation<
-      'api::sneacker.sneacker',
+      'api::snicker.snicker',
       'oneToOne',
       'admin::user'
     > &
       Attribute.Private;
     updatedBy: Attribute.Relation<
-      'api::sneacker.sneacker',
+      'api::snicker.snicker',
       'oneToOne',
       'admin::user'
     > &
@@ -731,7 +725,7 @@ declare module '@strapi/types' {
       'admin::api-token-permission': AdminApiTokenPermission;
       'admin::transfer-token': AdminTransferToken;
       'admin::transfer-token-permission': AdminTransferTokenPermission;
-      'api::sneacker.sneacker': ApiSneackerSneacker;
+      'api::snicker.snicker': ApiSnickerSnicker;
       'plugin::upload.file': PluginUploadFile;
       'plugin::upload.folder': PluginUploadFolder;
       'plugin::i18n.locale': PluginI18NLocale;
