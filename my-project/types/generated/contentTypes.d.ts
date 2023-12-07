@@ -400,6 +400,7 @@ export interface ApiSnickerSnicker extends Schema.CollectionType {
     singularName: 'snicker';
     pluralName: 'snickers';
     displayName: 'snicker';
+    description: '';
   };
   options: {
     draftAndPublish: true;
@@ -414,6 +415,7 @@ export interface ApiSnickerSnicker extends Schema.CollectionType {
     retailPrice: Attribute.Float;
     estimatedMarketValue: Attribute.Float;
     image: Attribute.JSON;
+    collection: Attribute.DynamicZone<['collection.collection-sneakers']>;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;

@@ -3,6 +3,7 @@ import home from '../views/home.vue'
 import product from '../views/product.vue'
 import login from '../views/login.vue'
 import register from '../views/register.vue'
+import collection from '../views/collection.vue'
 
 
 const router = createRouter({
@@ -28,6 +29,12 @@ const router = createRouter({
       path: '/register',
       name: 'register',
       component: register
+    }
+    ,
+    {
+      path: '/collection',
+      name: 'collection',
+      component: collection
     }
   ]
 })

@@ -4,7 +4,8 @@
   "info": {
     "singularName": "snicker",
     "pluralName": "snickers",
-    "displayName": "snicker"
+    "displayName": "snicker",
+    "description": ""
   },
   "options": {
     "draftAndPublish": true
@@ -37,6 +38,12 @@
     },
     "image": {
       "type": "json"
+    },
+    "collection": {
+      "type": "dynamiczone",
+      "components": [
+        "collection.collection-sneakers"
+      ]
     }
   }
 }
