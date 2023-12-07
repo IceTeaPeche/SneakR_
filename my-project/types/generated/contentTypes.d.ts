@@ -362,6 +362,38 @@ export interface AdminTransferTokenPermission extends Schema.CollectionType {
   };
 }
 
+export interface ApiAccountAccount extends Schema.CollectionType {
+  collectionName: 'accounts';
+  info: {
+    singularName: 'account';
+    pluralName: 'accounts';
+    displayName: 'account';
+    description: '';
+  };
+  options: {
+    draftAndPublish: false;
+  };
+  attributes: {
+    mail: Attribute.Email;
+    password: Attribute.Password;
+    username: Attribute.String;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::account.account',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::account.account',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
 export interface ApiSnickerSnicker extends Schema.CollectionType {
   collectionName: 'snickers';
   info: {
@@ -725,6 +757,7 @@ declare module '@strapi/types' {
       'admin::api-token-permission': AdminApiTokenPermission;
       'admin::transfer-token': AdminTransferToken;
       'admin::transfer-token-permission': AdminTransferTokenPermission;
+      'api::account.account': ApiAccountAccount;
       'api::snicker.snicker': ApiSnickerSnicker;
       'plugin::upload.file': PluginUploadFile;
       'plugin::upload.folder': PluginUploadFolder;
