@@ -4,6 +4,9 @@ import product from '../views/product.vue'
 import login from '../views/login.vue'
 import register from '../views/register.vue'
 import collection from '../views/collection.vue'
+import Les_réseaux from '../views/Les_réseaux.vue'
+import User from '../views/User.vue'
+import wishlist from '../views/wishlist.vue'
 
 
 const router = createRouter({
@@ -36,6 +39,25 @@ const router = createRouter({
       name: 'collection',
       component: collection
     }
+    ,
+    {
+      path: '/Les_réseaux',
+      name: 'Les_réseaux',
+      component: Les_réseaux
+    }
+    ,
+    {
+      path: '/User',
+      name: 'User',
+      component: User
+    }
+    ,
+    {
+      path: '/wishlist',
+      name: 'wishlist',
+      component: wishlist
+    }
+
   ]
 })
 

@@ -362,38 +362,6 @@ export interface AdminTransferTokenPermission extends Schema.CollectionType {
   };
 }
 
-export interface ApiAccountAccount extends Schema.CollectionType {
-  collectionName: 'accounts';
-  info: {
-    singularName: 'account';
-    pluralName: 'accounts';
-    displayName: 'account';
-    description: '';
-  };
-  options: {
-    draftAndPublish: false;
-  };
-  attributes: {
-    mail: Attribute.Email;
-    password: Attribute.Password;
-    username: Attribute.String;
-    createdAt: Attribute.DateTime;
-    updatedAt: Attribute.DateTime;
-    createdBy: Attribute.Relation<
-      'api::account.account',
-      'oneToOne',
-      'admin::user'
-    > &
-      Attribute.Private;
-    updatedBy: Attribute.Relation<
-      'api::account.account',
-      'oneToOne',
-      'admin::user'
-    > &
-      Attribute.Private;
-  };
-}
-
 export interface ApiSnickerSnicker extends Schema.CollectionType {
   collectionName: 'snickers';
   info: {
@@ -415,7 +383,11 @@ export interface ApiSnickerSnicker extends Schema.CollectionType {
     retailPrice: Attribute.Float;
     estimatedMarketValue: Attribute.Float;
     image: Attribute.JSON;
-    collection: Attribute.DynamicZone<['collection.collection-sneakers']>;
+    collection: Attribute.Relation<
+      'api::snicker.snicker',
+      'manyToMany',
+      'plugin::users-permissions.user'
+    >;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;
@@ -732,6 +704,11 @@ export interface PluginUsersPermissionsUser extends Schema.CollectionType {
       'manyToOne',
       'plugin::users-permissions.role'
     >;
+    snickers: Attribute.Relation<
+      'plugin::users-permissions.user',
+      'manyToMany',
+      'api::snicker.snicker'
+    >;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     createdBy: Attribute.Relation<
@@ -759,7 +736,6 @@ declare module '@strapi/types' {
       'admin::api-token-permission': AdminApiTokenPermission;
       'admin::transfer-token': AdminTransferToken;
       'admin::transfer-token-permission': AdminTransferTokenPermission;
-      'api::account.account': ApiAccountAccount;
       'api::snicker.snicker': ApiSnickerSnicker;
       'plugin::upload.file': PluginUploadFile;
       'plugin::upload.folder': PluginUploadFolder;

@@ -40,10 +40,10 @@
       "type": "json"
     },
     "collection": {
-      "type": "dynamiczone",
-      "components": [
-        "collection.collection-sneakers"
-      ]
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "plugin::users-permissions.user",
+      "inversedBy": "snickers"
     }
   }
 }
