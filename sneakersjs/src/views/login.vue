@@ -1,33 +1,27 @@
 <template>
 
-        <div class="flex justify-center items-center h-screen">
-            <div class="w-full max-w-sm p-4 bg-white border border-gray-200 rounded-lg shadow sm:p-6 md:p-8 dark:bg-gray-800 dark:border-gray-700">
-        <form class="space-y-6" @submit="login" >
-            <h5 class="text-xl font-medium text-gray-900 dark:text-white">Sign in to our platform</h5>
-            <div>
-                <label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Your email</label>
-                <input type="email" name="email" id="email" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" placeholder="name@company.com" required>
-            </div>
-            <div>
-                <label for="password" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Your password</label>
-                <input type="password" name="password" id="password" placeholder="••••••••" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" required>
-            </div>
-            <div class="flex items-start">
-                <div class="flex items-start">
-                    <div class="flex items-center h-5">
-                        <input id="remember" type="checkbox" value="" class="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-blue-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800" required>
-                    </div>
-                    <label for="remember" class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Remember me</label>
-                </div>
-                <a href="#" class="ms-auto text-sm text-blue-700 hover:underline dark:text-blue-500">Lost Password?</a>
-            </div>
-            <button type="submit"  class="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Login to your account</button>
-            <div class="text-sm font-medium text-gray-500 dark:text-gray-300">
-                Not registered? <a href="#" class="text-blue-700 hover:underline dark:text-blue-500">Create account</a>
-            </div>
+        
+
+
+        <form id="login-form">
+          <h3>Login</h3>
+
+          <label for="identifier">identifier</label>
+          <input id="identifier" type="text" placeholder="identifier" />
+
+          <label for="password">password</label>
+          <input id="password" type="password" placeholder="password" />
+
+          <button class="submit" v-on:click="login"> login </button>
+          <div class="creercompte">
+            <router-link to="/register">Créer un compte</router-link>
+          </div>
+          <div id="erreur"><p id="erreurlogin" class="erreurlogin"> </p></div>
+
         </form>
-    </div>
-    </div>
+ 
+
+
 
     
 </template>
@@ -39,28 +33,47 @@ import router from '../router';
 export default {
     data() {
         return {
-            email: '',
+            identifier: '',
             password: '',
             error: ''
         }
     },
     methods: {
-        async login() {
-            try {
-                const response = await axios.post('http://localhost:1337/api/auth/local', {
-                    email: this.email,
-                    password: this.password
-                });
+    
+      login() {
+            const loginForm = document.getElementById('login-form');
+            loginForm.addEventListener('submit', event => {
+                event.preventDefault();
+                const identifier = document.getElementById('identifier').value;
+                const password = document.getElementById('password').value;
+                axios.post('http://localhost:1337/api/auth/local', {
+                    identifier: identifier,
+                    password: password,
+                })
+                    .then(response => {
 
-                if (response.status === 200) {
-                    console.log('Réussi');
-                    this.$router.push('/home');
-                }
-            } catch (error) {
-                console.error(error);
-                this.error = 'Une erreur s\'est produite lors de la connexion';
-            }
-        }
+                        const status = response.status;
+                        console.log(status)
+                        if (status == 200) { // Si le status est 200 alors ça veut dire que les informations rentré par l'utilisateur sont correctes
+                            router.push('/product');
+                        }
+                    }
+                    )
+                    .catch(error => {
+                        if (error.response.status === 400) {
+                            document.querySelector("#erreurlogin").innerHTML = "the password or the email is invalid";
+                        } if (error.response.status === 429) {
+                            document.querySelector("#erreurlogin").innerHTML = "an error occurred, please try later";
+                        }
+
+
+
+                        else {
+                            console.log(error);
+                        }
+                    });
+            });
+        },
     }
 }
 </script>
@@ -70,7 +83,110 @@ export default {
 
 
 
+<style scoped>
+* {
+    margin: 0;
+    box-sizing: border-box;
+}
+body{
+    background-color: #ffffff;
+}
+
+form{
+    height: 600px;
+    width: 400px;
+    background-color: rgba(255, 255, 255, 0.13);
+    position: absolute;
+    transform: translate(-50%,-50%);
+    top: 50%;
+    left: 50%;
+    border-radius: 10px;
+    backdrop-filter: blur(10px);
+    border: 2px solid rgba(255,255,255,0.1);
+    box-shadow: 0 0 40px rgba(8,7,16,0.6);
+    padding: 50px 35px;
+}
+form *{
+    font-family: 'Poppins',sans-serif;
+    color: #ffffff;
+    letter-spacing: 0.5px;
+    outline: none;
+    border: none;
+}
+form h3{
+    font-size: 32px;
+    font-weight: 500;
+    line-height: 42px;
+    text-align: center;
+    color: #000000;
+
+}
+
+.label{
+    display: block;
+    margin-top: 30px;
+    font-size: 16px;
+    font-weight: 500;
+    color: #080710;
+}
+input#identifier, input#password {
+    display: block;
+    height: 50px;
+    width: 100%;
+    background-color: rgba(255,255,255,0.07);
+    border-radius: 8px;
+    padding: 0 10px;
+    margin-top: 8px;
+    font-size: 14px;
+    font-weight: 300;
+    color: #080710;
+    border: 2px solid rgba(0, 0, 0, 0.1);
+
+}
+::placeholder{
+    color: #535353;
+}
+.submit {
+    margin-top: 50px;
+    width: 100%;
+    background-color: #434343;
+    color: #ffffff;
+    padding: 15px 0;
+    font-size: 18px;
+    font-weight: 600;
+    border-radius: 5px;
+    cursor: pointer;
+}
+.seconnecter{
+  margin-top: 30px;
+  display: flex;
+  padding-left: 110px;
+
+}
+
+a{
+    text-decoration:none;
+}
+
+.seconnecter a {
+    color: #000000;
+}
 
 
-<style>
+#creer {
+    color: green;
+    margin-left: 90px;
+    margin-top: 10px;
+    font-size: 20px;
+}
+
+#erreur p{
+    color: #ff2121;
+    margin-left: 28px;
+    margin-top: 47px;
+}
+
+
 </style>
+
+
