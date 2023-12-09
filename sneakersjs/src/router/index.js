@@ -18,7 +18,7 @@ const router = createRouter({
       component: home
     },
     {
-      path: '/product',
+      path: '/product/:id/:name/:jwt',
       name: 'product',
       component: product
     },

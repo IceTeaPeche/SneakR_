@@ -67,7 +67,9 @@
         
               <div class="flex items-center justify-between">
                   <span class="text-3xl font-bold text-gray-900 dark:text-white ml-3">{{data.attributes.retailPrice}} €</span>
-                  <a class=""><img class="w-7 h-7 mr-2"  src="../assets/heart.png" alt=""></a>
+                  <a href="#" @click="addToCollection(data)">
+                            <img class="w-7 h-7 mr-2" src="../assets/heart.png" alt="">
+                        </a>
                   
               </div>
           </div>
@@ -185,6 +187,54 @@ export default {
                 this.fetchData();
             }
         },
+
+        async addToCollection(data) {
+            try {
+                // Obtenez le chemin de l'URL
+                const path = window.location.pathname;
+
+                // Utilisez une expression régulière pour extraire les valeurs
+                const match = path.match(/\/product\/([^\/]+)\/([^\/]+)\/([^\/]+)/);
+
+                if (!match || match.length < 4) {
+                    console.error('Unable to extract userId, identifier, or userTokens from the URL');
+                    return;
+                }
+
+                const userId = match[1];
+                const identifier = match[2];
+                const userTokens = match[3];
+
+                console.log('userId:', userId);
+                console.log('userTokens:', userTokens);
+
+                const requestBody = {
+                    data: {
+                        collection: {
+                            id: userId
+                        }
+                    }
+                };
+
+                const response = await fetch(`http://localhost:1337/api/snickers/${data.id}`, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${userTokens}`
+                    },
+                    body: JSON.stringify(requestBody)
+                });
+
+                if (response.ok) {
+                    console.log('Product added to collection successfully');
+                } else {
+                    console.error('Failed to add product to collection');
+                }
+            } catch (error) {
+                console.error('An error occurred while adding product to collection:', error);
+            }
+        }
+
 
 
     },
