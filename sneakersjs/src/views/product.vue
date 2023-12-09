@@ -16,24 +16,21 @@
         <div class="hidden w-full md:block md:w-auto" id="navbar-default">
           <ul class="font-medium flex flex-col p-4 md:p-0 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:flex-row md:space-x-8 rtl:space-x-reverse md:mt-0 md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
             <li>
-              <a href="/home" class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent" aria-current="page">home</a>
+              <a @click="pushhome" href="#" class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent" aria-current="page">home</a>
             </li>
             <li>
-              <a href="/product" id="product" class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"><router-link to="/product">product</router-link></a>
+              <a @click="pushproduct" href="#" id="product" class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">product</a>
             </li>
             <li>
-              <a href="/collection" class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">Collection</a>
+              <a  @click="pushcollection" href="#" class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">Collection</a>
             </li>
             <li>
-              <a href="/wishlist" class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">Wishlist</a>
+              <a @click="pushwishlist" href="#" class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">Wishlist</a>
             </li>
             <li>
-              <a href="/User" class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">User</a>
+              <a @click="pushuser" href="#" class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">User</a>
             </li>
-            <li>
-              <a href="/Les_réseaux" class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">Les réseaux</a>
-            </li>
-            
+          
           </ul>
         </div>
       </div>
@@ -233,8 +230,87 @@ export default {
             } catch (error) {
                 console.error('An error occurred while adding product to collection:', error);
             }
-        }
+        },
 
+        pushcollection() {
+            console.log("frere tes dan la merde, tes dans la merde")
+    
+            const path = window.location.pathname;
+            const match = path.match(/\/product\/([^\/]+)\/([^\/]+)\/([^\/]+)/);
+
+            if (!match || match.length < 4) {
+                console.error('Unable to extract userId, identifier, or userTokens from the URL');
+                return;
+            }
+
+            const userId = match[1];
+             const identifier = match[2];
+            const userTokens = match[3];
+            this.$router.push(`/collection/${userId}/${identifier}/${userTokens}`);
+            console.log(userId)
+        },
+
+        pushproduct() {
+             const path = window.location.pathname;
+            const match = path.match(/\/product\/([^\/]+)\/([^\/]+)\/([^\/]+)/);
+
+            if (!match || match.length < 4) {
+                console.error('Unable to extract userId, identifier, or userTokens from the URL');
+                return;
+            }
+            const Id = match[1];
+            const name = match[2];
+            const jwt = match[3];
+
+            this.$router.push(`/product/${Id}/${name}/${jwt}`);
+        },
+
+        pushhome() {
+            const path = window.location.pathname;
+            const match = path.match(/\/product\/([^\/]+)\/([^\/]+)\/([^\/]+)/);
+
+            if (!match || match.length < 4) {
+                console.error('Unable to extract userId, identifier, or userTokens from the URL');
+                return;
+            }
+            const Id = match[1];
+            const name = match[2];
+            const jwt = match[3];
+
+            this.$router.push(`/home/${Id}/${name}/${jwt}`);
+        },
+
+        pushwishlist() {
+            const path = window.location.pathname;
+            const match = path.match(/\/product\/([^\/]+)\/([^\/]+)\/([^\/]+)/);
+
+            if (!match || match.length < 4) {
+                console.error('Unable to extract userId, identifier, or userTokens from the URL');
+                return;
+            }
+            const Id = match[1];
+            const name = match[2];
+            const jwt = match[3];
+
+            this.$router.push(`/wishlist/${Id}/${name}/${jwt}`);
+        },
+
+        pushuser() {
+            const path = window.location.pathname;
+            const match = path.match(/\/product\/([^\/]+)\/([^\/]+)\/([^\/]+)/);
+
+            if (!match || match.length < 4) {
+                console.error('Unable to extract userId, identifier, or userTokens from the URL');
+                return;
+            }
+            const Id = match[1];
+            const name = match[2];
+            const jwt = match[3];
+
+            this.$router.push(`/User/${Id}/${name}/${jwt}`);
+        },
+
+        
 
 
     },

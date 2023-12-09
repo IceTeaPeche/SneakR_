@@ -4,7 +4,6 @@ import product from '../views/product.vue'
 import login from '../views/login.vue'
 import register from '../views/register.vue'
 import collection from '../views/collection.vue'
-import Les_réseaux from '../views/Les_réseaux.vue'
 import User from '../views/User.vue'
 import wishlist from '../views/wishlist.vue'
 
@@ -13,12 +12,12 @@ const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
-      path: '/home',
+      path: '/home//:userId/:identifier/:jwt',
       name: 'home',
       component: home
     },
     {
-      path: '/product/:id/:name/:jwt',
+      path: '/product//:userId/:identifier/:jwt',
       name: 'product',
       component: product
     },
@@ -35,25 +34,19 @@ const router = createRouter({
     }
     ,
     {
-      path: '/collection',
+      path: '/collection/:userId/:identifier/:jwt',
       name: 'collection',
       component: collection
     }
     ,
     {
-      path: '/Les_réseaux',
-      name: 'Les_réseaux',
-      component: Les_réseaux
-    }
-    ,
-    {
-      path: '/User',
+      path: '/User/:userId/:identifier/:jwt',
       name: 'User',
       component: User
     }
     ,
     {
-      path: '/wishlist',
+      path: '/wishlist/:userId/:identifier/:jwt',
       name: 'wishlist',
       component: wishlist
     }
