@@ -28,9 +28,7 @@
                 <li>
                   <a href="/wishlist" class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">Wishlist</a>
                 </li>
-                <li>
-                  <a href="/User" class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">User</a>
-                </li>
+             
               
             
               </ul>
@@ -42,28 +40,90 @@
 
 
 
-    <div>
+    <div id="taille">
         <form>
             <h3>Créer un compte</h3>
 
             <label class="label" for="email">Email</label>
-            <input id="email" type="text" placeholder="email" required />
+            
+            <input id="email" type="email" placeholder="email" v-model="email" @input="validateEmail" required/><p v-if="emailError">{{ emailError }}</p>
             <label class="label" for="username">username</label>
             <input id="username" class="input" type="text" placeholder="username" required />
             <label class="label" for="password">Password</label>
-            <input id="password" type="password" placeholder="password" required />
+            <input id="password" placeholder="password" type="password" v-model="password" @input="validatePassword" required/> <p v-if="passwordError">{{ passwordError }}</p>
             <button type="button" class="submit" v-on:click="registerUser">Create account</button>
             <div class="seconnecter">
-                <router-link to="/login">Login</router-link>
-            <div id="erreur"><p id="erreurlogin" class="erreurlogin"> </p></div>
+                <router-link to="/login">You have already account ? please <u>login</u></router-link>
             </div>
         </form>
     </div>
+
+    <footer class="bg-white rounded-lg shadow dark:bg-gray-900 m-4 flex justify-center">
+        <div class="w-full max-w-screen-xl mx-auto p-4 md:py-8">
+            <div class="sm:flex sm:items-center sm:justify-between">
+                <span class="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">Sneakers</span>
+
+                <ul class="flex flex-wrap items-center mb-6 text-sm font-medium text-gray-500 sm:mb-0 dark:text-gray-400">
+                    <li>
+                        <a href="#" class="hover:underline me-4 md:me-6">About</a>
+                    </li>
+                    <li>
+                        <a href="#" class="hover:underline me-4 md:me-6">Privacy Policy</a>
+                    </li>
+                    <li>
+                        <a href="#" class="hover:underline me-4 md:me-6">Licensing</a>
+                    </li>
+                    <li>
+                        <a href="#" class="hover:underline">Contact</a>
+                    </li>
+                </ul>
+            </div>
+            <hr class="my-6 border-gray-200 sm:mx-auto dark:border-gray-700 lg:my-8" />
+            <span class="block text-sm text-gray-500 sm:text-center dark:text-gray-400">
+                <a class="hover:underline">Sneakers</a>. All Rights Reserved.
+            </span>
+        </div>
+    </footer>
+
+
+
 </template>
 
 <script>
 export default {
+     data() {
+        return {
+            password: '',
+            passwordError: '',
+            email: '',
+            emailError: '',
+        };
+    },
+
     methods: {
+
+        validatePassword() {
+            this.passwordError = '';
+            if (this.password.length < 6) {
+                this.passwordError = 'Le mot de passe doit contenir au moins 6 caractères.';
+            } else if (!/\d/.test(this.password)) {
+                this.passwordError = 'Le mot de passe doit contenir au moins un chiffre.';
+            } else if (!/[a-z]/.test(this.password)) {
+                this.passwordError = 'Le mot de passe doit contenir au moins une lettre minuscule.';
+            } else if (!/[A-Z]/.test(this.password)) {
+                this.passwordError = 'Le mot de passe doit contenir au moins une lettre majuscule.';
+            }
+        },
+
+            validateEmail() {
+            this.emailError = '';
+            const check = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+            if (!check.test(this.email.toLowerCase())) {
+                this.emailError = 'Veuillez entrer une adresse email valide.';
+            }
+        },
+
+
         registerUser() {
             const email = document.getElementById('email').value;
             const password = document.getElementById('password').value;
@@ -86,21 +146,11 @@ export default {
                     return response.json();
                 })
                 .then(data => {
-                    console.log(data);
+                    console.log(data)
+                    this.$router.push('/login');;
                 })
-                .catch(error => {
-                    if (error instanceof TypeError) {
-                        console.error('Network error:', error.message);
-                    } else {
-                        console.error('Server error:', error.message);
-                        if (error.response && error.response.status === 400) {
-                            document.querySelector("#erreurlogin").innerHTML = "The password or the email is invalid";
-                        } else if (error.response && error.response.status === 429) {
-                            document.querySelector("#erreurlogin").innerHTML = "An error occurred, please try again later";
-                        } else {
-                            document.querySelector("#erreurlogin").innerHTML = "An unexpected error occurred";
-                        }
-                    }
+                .catch((error) => {
+                    console.error('Error:', error);
                 });
         }
     }
@@ -114,6 +164,10 @@ export default {
     box-sizing: border-box;
 }
 
+div#taille{
+    height: 49em;
+}
+
 body {
     background-color: #ffffff;
 }
@@ -123,7 +177,7 @@ form {
     width: 400px;
     background-color: rgba(255, 255, 255, 0.13);
     position: absolute;
-    transform: translate(-50%, -50%);
+    transform: translate(-50%,-50%);
     top: 50%;
     left: 50%;
     border-radius: 10px;
@@ -203,7 +257,14 @@ a {
 }
 
 .seconnecter a {
-    color: #000000;
+    color: #3d3d3d;
+    margin-left: -84px;
+    margin-top: -22px;
+    font-size: 14px;
+}
+
+u{
+    color: black;
 }
 
 
@@ -214,11 +275,12 @@ a {
     font-size: 20px;
 }
 
-#erreur p {
-    color: #ff2121;
-    margin-left: 28px;
-    margin-top: 47px;
-}
 
+p {
+    color: rgb(0, 0, 0);
+    font-size: 10px;
+    margin: 0px;
+    padding-left: 6px;
+}
 
 </style>

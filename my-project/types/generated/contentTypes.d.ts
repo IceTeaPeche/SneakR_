@@ -388,6 +388,11 @@ export interface ApiSnickerSnicker extends Schema.CollectionType {
       'manyToMany',
       'plugin::users-permissions.user'
     >;
+    wishlist: Attribute.Relation<
+      'api::snicker.snicker',
+      'manyToMany',
+      'plugin::users-permissions.user'
+    >;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;
@@ -675,7 +680,6 @@ export interface PluginUsersPermissionsUser extends Schema.CollectionType {
   };
   options: {
     draftAndPublish: false;
-    timestamps: true;
   };
   attributes: {
     username: Attribute.String &
@@ -709,6 +713,12 @@ export interface PluginUsersPermissionsUser extends Schema.CollectionType {
       'manyToMany',
       'api::snicker.snicker'
     >;
+    snickerss: Attribute.Relation<
+      'plugin::users-permissions.user',
+      'manyToMany',
+      'api::snicker.snicker'
+    >;
+    avatar: Attribute.Media;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     createdBy: Attribute.Relation<

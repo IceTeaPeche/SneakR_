@@ -20,14 +20,12 @@
                 <a @click="pushproduct" href="#" id="product" class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">product</a>
               </li>
               <li>
-                <a  @click="pushcollection" href="#" class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">Collection</a>
+                <a  @click="pushcollection" href="#" class="block py-2 px-3 text-white bg-blue-700 rounded md:bg-transparent md:text-blue-700 md:p-0 dark:text-white md:dark:text-blue-500">Collection</a>
               </li>
               <li>
                 <a @click="pushwishlist" href="#" class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">Wishlist</a>
               </li>
-              <li>
-                <a @click="pushuser" href="#" class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">User</a>
-              </li>
+             
           
             </ul>
           </div>
@@ -62,22 +60,20 @@
 
         <div class="flex items-center justify-between">
           <span class="text-3xl font-bold text-gray-900 dark:text-white ml-3">{{ data.attributes.retailPrice }} €</span>
+          <div class="flex">
+          <a href="#" @click="addToCollection(data)">
+              <img class="w-7 h-7 mr-2" src="../assets/wishlist.png" alt="">
+            </a>
           <a href="#" @click="addToCollection(data)">
             <img class="w-7 h-7 mr-2" src="../assets/heart.png" alt="">
           </a>
+          </div>
 
         </div>
       </div>
     </article>
   </section>
 
-  <div class="pagination flex items-center justify-center mt-4">
-    <button @click="previousPage" :disabled="currentPage === 1"
-      class="px-4 py-2 text-sm font-medium text-gray-500 bg-white border border-gray-300 rounded-md shadow-sm dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-800 dark:focus:border-gray-700 dark:hover:text-gray-300">Previous</button>
-    <span class="mx-2 text-sm font-medium text-gray-500 dark:text-gray-400">{{ currentPage }}</span>
-    <button @click="nextPage" :disabled="currentPage === totalPages"
-      class="px-4 py-2 text-sm font-medium text-gray-500 bg-white border border-gray-300 rounded-md shadow-sm dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-800 dark:focus:border-gray-700 dark:hover:text-gray-300">Next</button>
-  </div>
 
 
 
@@ -134,17 +130,25 @@ export default {
 
        const userId = this.$route.params.userId; // Récupérer l'userId de l'URL
        console.log(userId)
-      try {
+       try {
+        this.datas = []; // Initialise the datas array
 
-      
-        console.log("coucou nathan");
-        const response = await fetch(`http://localhost:1337/api/snickers?populate[0]=collection`);
-        const data = await response.json();
-        this.datas = data.data.filter(item => item.attributes.collection.data.some(collectionItem => collectionItem.id == userId));
-        // Faire quelque chose avec les données récupérées
-        console.log(data, "les données ont été récupérées avec succès");
+        for (let page = 1; page <= 493; page++) {
+          const response = await fetch(`http://localhost:1337/api/snickers?pagination%5Bpage%5D=${page}&populate[0]=collection`);
+          const data = await response.json();
+          const filteredData = data.data.filter(item => item.attributes.collection.data.some(collectionItem => collectionItem.id == userId));
+
+          // Add the filtered data to the datas array
+          this.datas = [...this.datas, ...filteredData];
+
+          // Log the current page
+          console.log(`Page ${page} has been fetched successfully`);
+        }
+
+        // Log the total number of items fetched
+        console.log(`${this.datas.length} items have been fetched in total`);
       } catch (error) {
-        console.error('Une erreur s\'est produite lors de la récupération des données:', error);
+        console.error('An error occurred while fetching the data:', error);
       }
       await Promise.all(
         this.datas.map(async (item) => {
@@ -167,19 +171,7 @@ export default {
       });
     },
 
-    previousPage() {
-      if (this.currentPage > 1) {
-        this.currentPage--;
-        this.fetchData();
-      }
-    },
-
-    nextPage() {
-      if (this.currentPage < this.totalPages) {
-        this.currentPage++;
-        this.fetchData();
-      }
-    },
+   
 
     pushproduct() {
       const path = window.location.pathname;
@@ -241,23 +233,7 @@ export default {
       this.$router.push(`/wishlist/${Id}/${name}/${jwt}`);
     },
 
-    pushuser() {
-      const path = window.location.pathname;
-      const match = path.match(/\/(home|collection|wishlist|user)\/([^\/]+)\/([^\/]+)\/([^\/]+)/);
-
-      if (!match || match.length < 5) {
-        console.error('Unable to extract userId, identifier, or userTokens from the URL');
-        return;
-      }
-      const Id = match[2];
-      const name = match[3];
-      const jwt = match[4];
-
-      this.$router.push(`/user/${Id}/${name}/${jwt}`);
-    },
-
     
-
 
   },
   async mounted() {

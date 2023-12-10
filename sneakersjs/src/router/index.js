@@ -4,7 +4,7 @@ import product from '../views/product.vue'
 import login from '../views/login.vue'
 import register from '../views/register.vue'
 import collection from '../views/collection.vue'
-import User from '../views/User.vue'
+
 import wishlist from '../views/wishlist.vue'
 
 
@@ -37,12 +37,6 @@ const router = createRouter({
       path: '/collection/:userId/:identifier/:jwt',
       name: 'collection',
       component: collection
-    }
-    ,
-    {
-      path: '/User/:userId/:identifier/:jwt',
-      name: 'User',
-      component: User
     }
     ,
     {

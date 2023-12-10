@@ -9,8 +9,7 @@
     "displayName": "User"
   },
   "options": {
-    "draftAndPublish": false,
-    "timestamps": true
+    "draftAndPublish": false
   },
   "attributes": {
     "username": {
@@ -71,6 +70,22 @@
       "relation": "manyToMany",
       "target": "api::snicker.snicker",
       "mappedBy": "collection"
+    },
+    "snickerss": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::snicker.snicker",
+      "mappedBy": "wishlist"
+    },
+    "avatar": {
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ],
+      "type": "media",
+      "multiple": false
     }
   }
 }

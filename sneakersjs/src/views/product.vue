@@ -19,7 +19,7 @@
               <a @click="pushhome" href="#" class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent" aria-current="page">home</a>
             </li>
             <li>
-              <a @click="pushproduct" href="#" id="product" class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">product</a>
+              <a @click="pushproduct" href="#" id="product" class="block py-2 px-3 text-white bg-blue-700 rounded md:bg-transparent md:text-blue-700 md:p-0 dark:text-white md:dark:text-blue-500">product</a>
             </li>
             <li>
               <a  @click="pushcollection" href="#" class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">Collection</a>
@@ -27,10 +27,7 @@
             <li>
               <a @click="pushwishlist" href="#" class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">Wishlist</a>
             </li>
-            <li>
-              <a @click="pushuser" href="#" class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">User</a>
-            </li>
-          
+           
           </ul>
         </div>
       </div>
@@ -52,8 +49,9 @@
 <section>
     <article v-for="data in datas" :key="data.id">
          <div class="w-60 max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+            
           <a href="#">
-              <img class="p-8 rounded-t-lg" :src="data.smallImage" />
+              <img class="p-8 rounded-t-lg" :src="data.smallImage"  />
           </a>
           <div class="px-3 pb-5">
               <a href="#">
@@ -64,9 +62,16 @@
         
               <div class="flex items-center justify-between">
                   <span class="text-3xl font-bold text-gray-900 dark:text-white ml-3">{{data.attributes.retailPrice}} €</span>
-                  <a href="#" @click="addToCollection(data)">
-                            <img class="w-7 h-7 mr-2" src="../assets/heart.png" alt="">
-                        </a>
+                  <div class="flex">
+                        <a href="#" @click="addToWishlist(data)">
+                                        <img class="w-7 h-7 mr-2" src="../assets/wishlist.png" alt="">
+                                    </a>
+                        <a href="#" @click="addToCollection(data)">
+                                    <img class="w-7 h-7 mr-2" src="../assets/heart.png" alt="">
+                                </a>
+                    </div>
+                    
+
                   
               </div>
           </div>
@@ -133,11 +138,14 @@ export default {
             currentPage: 1,
             totalPages: 1950,
             search: '',
+           
+            
             
         };
     },
    
     methods: {
+
 
         async fetchData() {
             try {
@@ -156,7 +164,7 @@ export default {
                 })
             );
         },
-        async getSmallImage(item) {
+       async getSmallImage(item) {
             const imageObject = JSON.parse(item.attributes.image.replace(/'/g, '"'));
             const smallImage = imageObject.original;
 
@@ -168,8 +176,11 @@ export default {
                     // Resolve the promise once the image is loaded
                     resolve(smallImage);
                 };
+
             });
         },
+
+     
 
         previousPage() {
             if (this.currentPage > 1) {
@@ -231,6 +242,58 @@ export default {
                 console.error('An error occurred while adding product to collection:', error);
             }
         },
+
+        async addToWishlist(data) {
+            try {
+                // Obtenez le chemin de l'URL
+                const path = window.location.pathname;
+
+                // Utilisez une expression régulière pour extraire les valeurs
+                const match = path.match(/\/product\/([^\/]+)\/([^\/]+)\/([^\/]+)/);
+
+                if (!match || match.length < 4) {
+                    console.error('Unable to extract userId, identifier, or userTokens from the URL');
+                    return;
+                }
+
+                const userId = match[1];
+                const identifier = match[2];
+                const userTokens = match[3];
+
+                console.log('userId:', userId);
+                console.log('userTokens:', userTokens);
+
+                const requestBody = {
+                    data: {
+                        wishlist: {
+                            id: userId
+                        }
+                    }
+                };
+
+                const response = await fetch(`http://localhost:1337/api/snickers/${data.id}`, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${userTokens}`
+                    },
+                    body: JSON.stringify(requestBody)
+                });
+
+                if (response.ok) {
+                    console.log('Product added to wishlist successfully');
+                } else {
+                    console.error('Failed to add product to wishlist');
+                }
+            } catch (error) {
+                console.error('An error occurred while adding product to wishlist:', error);
+            }
+        },
+
+
+
+
+
 
         pushcollection() {
             console.log("frere tes dan la merde, tes dans la merde")
@@ -294,22 +357,6 @@ export default {
 
             this.$router.push(`/wishlist/${Id}/${name}/${jwt}`);
         },
-
-        pushuser() {
-            const path = window.location.pathname;
-            const match = path.match(/\/product\/([^\/]+)\/([^\/]+)\/([^\/]+)/);
-
-            if (!match || match.length < 4) {
-                console.error('Unable to extract userId, identifier, or userTokens from the URL');
-                return;
-            }
-            const Id = match[1];
-            const name = match[2];
-            const jwt = match[3];
-
-            this.$router.push(`/User/${Id}/${name}/${jwt}`);
-        },
-
         
 
 
