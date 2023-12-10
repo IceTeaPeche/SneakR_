@@ -34,6 +34,70 @@
       
             </nav>
 
+  <img id="jordan" src="../assets/Air_Jordan_4_Retro_Tour_Yellow_Sneaker_POlitics_LIFESTYLE-07.jpg.webp" alt="Carousel item" />
+
+
+  <h1>Collection NIKE</h1>
+
+            <section>
+      <article v-for="data in datas" :key="data.id">
+           <div class="w-60 max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+            
+            <a href="#">
+                <img class="p-8 rounded-t-lg" :src="data.smallImage"  />
+            </a>
+            <div class="px-3 pb-5">
+                <a href="#">
+                    <h5 class="text-xl font-semibold trackin g-tight text-gray-900 dark:text-white">{{ data.attributes.name }}</h5>
+                </a>
+          </div>
+
+        
+                <div class="flex items-center justify-between">
+                    <span class="text-3xl font-bold text-gray-900 dark:text-white ml-3">{{ data.attributes.retailPrice }} €</span>
+                    
+                    
+
+                  
+                </div>
+            </div>
+          </article>
+      </section>
+
+      <h1>Voir plus (renvoie sur product)</h1>
+
+
+            
+
+   <footer class="bg-white rounded-lg shadow dark:bg-gray-900 m-4 flex justify-center">
+              <div class="w-full max-w-screen-xl mx-auto p-4 md:py-8">
+                  <div class="sm:flex sm:items-center sm:justify-between">
+                      <span class="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">Sneakers</span>
+
+                      <ul class="flex flex-wrap items-center mb-6 text-sm font-medium text-gray-500 sm:mb-0 dark:text-gray-400">
+                          <li>
+                              <a href="#" class="hover:underline me-4 md:me-6">About</a>
+                          </li>
+                          <li>
+                              <a href="#" class="hover:underline me-4 md:me-6">Privacy Policy</a>
+                          </li>
+                          <li>
+                              <a href="#" class="hover:underline me-4 md:me-6">Licensing</a>
+                          </li>
+                          <li>
+                              <a href="#" class="hover:underline">Contact</a>
+                          </li>
+                      </ul>
+                  </div>
+                  <hr class="my-6 border-gray-200 sm:mx-auto dark:border-gray-700 lg:my-8" />
+                  <span class="block text-sm text-gray-500 sm:text-center dark:text-gray-400">
+                      <a class="hover:underline">Sneakers</a>. All Rights Reserved.
+                  </span>
+              </div>
+          </footer>
+
+
+
 
 
 
@@ -41,11 +105,15 @@
 
 
 <script>
-  
+
+
+
 
 
 export default {
   name: 'home',
+
+  
 
   data() {
     return {
@@ -57,6 +125,47 @@ export default {
   },
 
   methods: {
+
+  async fetchData() {
+      try {
+        console.log("coucou nathan")
+        const response = await fetch(`http://localhost:1337/api/snickers?pagination%5Bpage%5D=${this.currentPage}&pagination%5BpageSize%5D=6&_q=balenciaga`);
+        const data = await response.json();
+        this.datas = data.data.filter(item => {
+          const imageObject = JSON.parse(item.attributes.image.replace(/'/g, '"'));
+          return imageObject && imageObject.original;
+        });
+        console.log(data, "les données ont été récupérées avec succès");
+      } catch (error) {
+        console.error('Une erreur s\'est produite lors de la récupération des données:', error);
+      }
+      await Promise.all(
+        this.datas.map(async (item) => {
+          item.smallImage = await this.getSmallImage(item);
+        })
+      );
+    },
+    async getSmallImage(item) {
+      const imageObject = JSON.parse(item.attributes.image.replace(/'/g, '"'));
+      const smallImage = imageObject.original;
+
+      // Create a promise to handle the image loading
+      return new Promise((resolve) => {
+        const image = new Image();
+        image.src = smallImage;
+        image.onload = () => {
+          // Resolve the promise once the image is loaded
+          resolve(smallImage);
+        };
+
+      });
+    },
+
+
+
+
+
+
 
     pushproduct() {
       const path = window.location.pathname;
@@ -121,7 +230,12 @@ export default {
       this.$router.push(`/home/${Id}/${name}/${jwt}`);
     },
 
-  }
+  },
+
+   async mounted() {
+    await this.fetchData();
+  },
+
 
   
 };
@@ -129,4 +243,39 @@ export default {
 </script>
 
 <style>
+
+
+section{
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px,1fr));
+    padding-left: 1.5%;
+    gap: 15px;
+    margin-top: 25px;
+    
+}
+
+img#jordan {
+    width: 100%;
+    height: 85%;
+    
+  }
+
+  h5{
+     white-space: nowrap;
+  overflow: auto;
+}
+
+span{
+    white-space: nowrap;
+  overflow: auto;
+}
+
+  @media (max-width: 768px) {
+    img#jordan {
+      width: 100%;
+      height: auto;
+      margin-left: 0;
+    }
+  }
+
 </style>

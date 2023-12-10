@@ -117,7 +117,7 @@ export default {
                         const userId = response.data.user.id; // Changed from response.user.id to response.data.user.id
                         const userTokens = response.data.jwt; // Changed from response.jwt to response.data.jwt
                         router.push({
-                            path: `/product/${userId}/${identifier}/${userTokens}`
+                            path: `/home/${userId}/${identifier}/${userTokens}`
                         });
                     }
                 })
