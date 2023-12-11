@@ -1,7 +1,7 @@
 <template>
       
            
-               <header class="lg:px-16 px-6 bg-white flex flex-wrap items-center lg:py-0 mt-3 py-2">
+               <header class="lg:px-16 px-6 bg-white flex flex-wrap items-center lg:py-0 mt-4 py-2 ">
             <div class="flex-1 flex justify-between items-center">
               <a class="flex items-center space-x-3 rtl:space-x-reverse">
                       <span class="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">Sneakers</span>
@@ -19,12 +19,6 @@
                       </li>
                       <li>
                         <a @click="pushproduct" href="#" id="product" class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">product</a>
-                      </li>
-                      <li>
-                        <a  @click="pushcollection" href="#" class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">Collection</a>
-                      </li>
-                      <li>
-                        <a @click="pushwishlist" href="#" class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">Wishlist</a>
                       </li>
              
           
@@ -133,6 +127,13 @@ export default {
                     })
             });
         },
+          pushproduct() {
+            this.$router.push(`/productnouser/`);
+        },
+
+        pushhome() {
+            this.$router.push(`/`);
+        },
     }
 }
 </script>
@@ -144,7 +145,7 @@ export default {
 
 <style scoped>
 * {
-    margin: 0;
+    
     box-sizing: border-box;
 }
 body{

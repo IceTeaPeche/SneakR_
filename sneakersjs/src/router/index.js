@@ -60,7 +60,7 @@ const router = createRouter({
     }
     ,
     {
-      path: '/homenouser',
+      path: '/',
       name: 'homenouser',
       component: homenouser
     }
