@@ -1,38 +1,56 @@
 <template>
 
 
-     <nav class="bg-white border-gray-200 dark:bg-gray-900 w-screen left-0 right-0">
-      <div class="max-w-screen-s flex flex-wrap items-center justify-between mx-auto p-4">
-        <a class="flex items-center space-x-3 rtl:space-x-reverse">
-            <span class="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">Sneakers</span>
-        </a>
-        <button data-collapse-toggle="navbar-default" type="button" class="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600" aria-controls="navbar-default" aria-expanded="false">
-            <span class="sr-only">Open main menu</span>
-            <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 17 14">
-                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 1h15M1 7h15M1 13h15"/>
-            </svg>
-        </button>
-        
-        <div class="hidden w-full md:block md:w-auto" id="navbar-default">
-          <ul class="font-medium flex flex-col p-4 md:p-0 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:flex-row md:space-x-8 rtl:space-x-reverse md:mt-0 md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
-            <li>
-              <a @click="pushhome" href="#" class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent" aria-current="page">home</a>
-            </li>
-            <li>
-              <a @click="pushproduct" href="#" id="product" class="block py-2 px-3 text-white bg-blue-700 rounded md:bg-transparent md:text-blue-700 md:p-0 dark:text-white md:dark:text-blue-500">product</a>
-            </li>
-            <li>
-              <a  @click="pushcollection" href="#" class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">Collection</a>
-            </li>
-            <li>
-              <a @click="pushwishlist" href="#" class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">Wishlist</a>
-            </li>
-           
-          </ul>
-        </div>
+       <header class="lg:px-16 px-6 bg-white flex flex-wrap items-center lg:py-0 mt-3 py-2">
+        <div class="flex-1 flex justify-between items-center">
+          <a class="flex items-center space-x-3 rtl:space-x-reverse">
+                  <span class="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">Sneakers</span>
+              </a>
       </div>
+
+       <label for="menu-toggle" class="pointer-cursor lg:hidden block"><svg class="fill-current text-gray-900" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20"><title>menu</title><path d="M0 3h20v2H0V3zm0 6h20v2H0V9zm0 6h20v2H0v-2z"></path></svg></label>
+      <input class="hidden" type="checkbox" id="menu-toggle" />
+
+      <div class="hidden lg:flex lg:items-center lg:w-auto w-full" id="menu">
+        <nav>
+     <ul class="font-medium flex flex-col p-4 md:p-0 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:flex-row md:space-x-8 rtl:space-x-reverse md:mt-0 md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
+                  <li>
+                    <a @click="pushhome" href="#" class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent" aria-current="page">home</a>
+                  </li>
+                  <li>
+                    <a @click="pushproduct" href="#" id="product" class="block py-2 px-3 text-white bg-blue-700 rounded md:bg-transparent md:text-blue-700 md:p-0 dark:text-white md:dark:text-blue-500">product</a>
+                  </li>
+                  <li>
+                    <a  @click="pushcollection" href="#" class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">Collection</a>
+                  </li>
+                  <li>
+                    <a @click="pushwishlist" href="#" class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">Wishlist</a>
+                  </li>
+             
+          
+                </ul>
+        </nav>
+       <div class="relative group inline-block lg:ml-6 flex lg:mb-0 mb-4 pointer-cursor">
+        <button class="flex items-center space-x-2">
+            <img src="/Users/ethanledouble/github/SneakR_/sneakersjs/src/assets/login.png" alt="Your avatar" class="w-9 h-9 rounded-full border-1 border-transparent hover:border-blue-600">
+        </button>
+        <div class="absolute hidden mt-9 py-2 w-48 bg-white rounded-lg shadow-xl group-hover:block left-[-120px]">
+            <a href="#" class="block px-4 py-2 text-gray-800 hover:bg-blue-600 hover:text-white">Password reset</a>
+            <a href="#" class="block px-4 py-2 text-gray-800 hover:bg-blue-600 hover:text-white">Password forgot</a>
+            <a href="#" class="block px-4 py-2 text-gray-800 hover:bg-blue-600 hover:text-white">   
+               <router-link to="/login" >Sign out</router-link> 
+            </a>
+        </div>
+    </div>
+
+
+     
+
+      </div>
+
+      </header>
       
-    </nav>
+      
 
 
 
@@ -44,14 +62,16 @@
 </div>
 
 
+    
+
 
 
 <section>
     <article v-for="data in datas" :key="data.id">
-         <div class="w-60 max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+         <div class="w-60 max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700"  @click="goToProductDetail(data.id)">
             
           <a href="#">
-              <img class="p-8 rounded-t-lg" :src="data.smallImage"  />
+              <img class="p-8 rounded-t-lg" :src="data.smallImage" width="700px" height="700px"  />
           </a>
           <div class="px-3 pb-5">
               <a href="#">
@@ -67,7 +87,7 @@
                                         <img class="w-7 h-7 mr-2" src="../assets/wishlist.png" alt="">
                                     </a>
                         <a href="#" @click="addToCollection(data)">
-                                    <img class="w-7 h-7 mr-2" src="../assets/heart.png" alt="">
+                                    <img class="w-7 h-7 mr-2" src="../assets/coeur-blanc.png" alt="">
                                 </a>
                     </div>
                     
@@ -77,6 +97,19 @@
           </div>
         </article>
     </section>
+
+      <div class="flex justify-center mt-6">
+            <a @click="moreproduct" class="bg-white-500 text-gray-700 Lugrasimo py-2 px- rounded mr-0" style="font-family: 'Your Custom Font', sans-serif;">
+              Voir plus
+            </a>
+          </div>
+        
+
+
+
+
+
+
       
 <div class="pagination flex items-center justify-center mt-4">
     <button @click="previousPage" :disabled="currentPage === 1" class="px-4 py-2 text-sm font-medium text-gray-500 bg-white border border-gray-300 rounded-md shadow-sm dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-800 dark:focus:border-gray-700 dark:hover:text-gray-300">Previous</button>
@@ -129,6 +162,10 @@
 </template>
 
 <script>
+
+
+
+
 export default {
     name: 'Home1',
 
@@ -138,6 +175,11 @@ export default {
             currentPage: 1,
             totalPages: 1950,
             search: '',
+            nombredeproduct: '25',
+            filter1: '',
+            
+         
+        
            
             
             
@@ -146,14 +188,20 @@ export default {
    
     methods: {
 
+         goToProductDetail(id) {
+            this.$router.push(`/detailproduct/${id}`);
+        },
+
 
         async fetchData() {
             try {
                 console.log("coucou nathan")
-                const response = await fetch(`http://localhost:1337/api/snickers?pagination%5Bpage%5D=${this.currentPage}&_q=${this.search}`);
+                const response = await fetch(`http://localhost:1337/api/snickers?pagination%5Bpage%5D=${this.currentPage}&_q=${this.search}&pagination%5BpageSize%5D=${this.nombredeproduct}`);
+
                 const data = await response.json();
+
                 this.datas = data.data;
-                // Faire quelque chose avec les données récupérées
+
                 console.log(data, "les données ont été récupérées avec succès");
             } catch (error) {
                 console.error('Une erreur s\'est produite lors de la récupération des données:', error);
@@ -196,12 +244,16 @@ export default {
             }
         },
 
+        async moreproduct() {
+            this.nombredeproduct = '100';
+            this.fetchData();
+        },
+
         async addToCollection(data) {
             try {
-                // Obtenez le chemin de l'URL
+                
                 const path = window.location.pathname;
-
-                // Utilisez une expression régulière pour extraire les valeurs
+               
                 const match = path.match(/\/product\/([^\/]+)\/([^\/]+)\/([^\/]+)/);
 
                 if (!match || match.length < 4) {
@@ -235,6 +287,7 @@ export default {
 
                 if (response.ok) {
                     console.log('Product added to collection successfully');
+                    
                 } else {
                     console.error('Failed to add product to collection');
                 }
@@ -245,10 +298,8 @@ export default {
 
         async addToWishlist(data) {
             try {
-                // Obtenez le chemin de l'URL
                 const path = window.location.pathname;
 
-                // Utilisez une expression régulière pour extraire les valeurs
                 const match = path.match(/\/product\/([^\/]+)\/([^\/]+)\/([^\/]+)/);
 
                 if (!match || match.length < 4) {
@@ -371,13 +422,18 @@ export default {
 
 <style scoped>
 
+article{
+    padding-top: 20px;
+
+}
+
 section{
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px,1fr));
+    grid-template-columns: repeat(auto-fit, minmax(235px,1fr));
     padding-left: 1.5%;
-    gap: 15px;
-    margin-top: 25px;
-    
+    gap: 20px;
+    margin-top: 35px;
+    padding-top: 40px;
 }
 
 h5{
@@ -397,10 +453,39 @@ span{
     margin-top: 25px;
 }
 
+#menu-toggle:checked + #menu {
+        display: block;
+      }
+
+
+@media (max-width: 1023px) {
+
+.lg\:ml-6 {
+   float: right;
+   
+}
 
 
 
 
+
+
+}
+
+
+@media (max-width: 767px) {
+
+
+
+.lg\:ml-6 {
+   float: right;
+   margin-right: 55px;
+   margin-top: -244px;
+}
+
+
+
+}
 
 
 

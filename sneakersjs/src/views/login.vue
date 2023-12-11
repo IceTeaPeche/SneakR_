@@ -1,49 +1,47 @@
 <template>
-
-        
-     <nav class="bg-white border-gray-200 dark:bg-gray-900 w-screen left-0 right-0">
-      <div class="max-w-screen flex flex-wrap items-center justify-between mx-auto p-4">
-        <a class="flex items-center space-x-3 rtl:space-x-reverse">
-            <span class="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">Sneakers</span>
-        </a>
-        <button data-collapse-toggle="navbar-default" type="button" class="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600" aria-controls="navbar-default" aria-expanded="false">
-            <span class="sr-only">Open main menu</span>
-            <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 17 14">
-                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 1h15M1 7h15M1 13h15"/>
-            </svg>
-        </button>
-        
-        <div class="hidden w-full md:block md:w-auto" id="navbar-default">
-          <ul class="font-medium flex flex-col p-4 md:p-0 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:flex-row md:space-x-8 rtl:space-x-reverse md:mt-0 md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
-            <li>
-              <a href="/home" class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent" aria-current="page">home</a>
-            </li>
-            <li>
-              <a href="/product" id="product" class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"><router-link to="/product">product</router-link></a>
-            </li>
-            <li>
-              <a href="/collection" class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">Collection</a>
-            </li>
-            <li>
-              <a href="/wishlist" class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">Wishlist</a>
-            </li>
-           
-            
-          </ul>
-        </div>
-      </div>
       
-    </nav>
+           
+               <header class="lg:px-16 px-6 bg-white flex flex-wrap items-center lg:py-0 mt-3 py-2">
+            <div class="flex-1 flex justify-between items-center">
+              <a class="flex items-center space-x-3 rtl:space-x-reverse">
+                      <span class="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">Sneakers</span>
+                  </a>
+          </div>
 
+           <label for="menu-toggle" class="pointer-cursor lg:hidden block"><svg class="fill-current text-gray-900" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20"><title>menu</title><path d="M0 3h20v2H0V3zm0 6h20v2H0V9zm0 6h20v2H0v-2z"></path></svg></label>
+          <input class="hidden" type="checkbox" id="menu-toggle" />
+
+          <div class="hidden lg:flex lg:items-center lg:w-auto w-full" id="menu">
+            <nav>
+         <ul class="font-medium flex flex-col p-4 md:p-0 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:flex-row md:space-x-8 rtl:space-x-reverse md:mt-0 md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
+                      <li>
+                        <a @click="pushhome" href="#" class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent" aria-current="page">home</a>
+                      </li>
+                      <li>
+                        <a @click="pushproduct" href="#" id="product" class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">product</a>
+                      </li>
+                      <li>
+                        <a  @click="pushcollection" href="#" class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">Collection</a>
+                      </li>
+                      <li>
+                        <a @click="pushwishlist" href="#" class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">Wishlist</a>
+                      </li>
+             
+          
+                    </ul>
+            </nav>
+          </div>
+
+          </header>
 
     <div id="taille">
         <form id="login-form">
           <h3>Login</h3>
 
-          <label for="identifier">identifier</label>
+          <label id="cc" for="identifier">identifier</label>
           <input id="identifier" type="text" placeholder="identifier" />
 
-          <label for="password">password</label>
+          <label id="cc" for="password">password</label>
           <input id="password" type="password" placeholder="password" />
 
           <button class="submit" v-on:click="login"> login </button>
@@ -113,9 +111,9 @@ export default {
                     const status = response.status;
                     console.log(status)
                     if (status == 200) {
-                        const identifier = response.data.user.username; // Changed from response.user.identifier to response.data.user.username
-                        const userId = response.data.user.id; // Changed from response.user.id to response.data.user.id
-                        const userTokens = response.data.jwt; // Changed from response.jwt to response.data.jwt
+                        const identifier = response.data.user.username; 
+                        const userId = response.data.user.id;
+                        const userTokens = response.data.jwt; 
                         router.push({
                             path: `/home/${userId}/${identifier}/${userTokens}`
                         });
@@ -130,7 +128,6 @@ export default {
                                 document.querySelector("#erreurlogin").innerHTML = "an error occurred, please try later";
                             }
                         } else {
-                            // Handle error without response
                             console.error('Error:', error);
                         }
                     })
@@ -184,7 +181,7 @@ form h3{
 
 }
 
-label{
+#cc{
     display: block;
     margin-top: 30px;
     font-size: 16px;
@@ -255,6 +252,13 @@ u{
 div#taille{
     height: 49em;
 }
+
+#menu-toggle:checked + #menu {
+        display: block;
+      }
+
+
+
 
 
 </style>

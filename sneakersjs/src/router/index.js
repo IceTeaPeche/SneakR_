@@ -4,8 +4,10 @@ import product from '../views/product.vue'
 import login from '../views/login.vue'
 import register from '../views/register.vue'
 import collection from '../views/collection.vue'
-
+import detailproduct from '@/views/detailproduct.vue'
 import wishlist from '../views/wishlist.vue'
+import productnouser from '../views/productnouser.vue'
+import homenouser from '../views/homenouser.vue'
 
 
 const router = createRouter({
@@ -43,6 +45,24 @@ const router = createRouter({
       path: '/wishlist/:userId/:identifier/:jwt',
       name: 'wishlist',
       component: wishlist
+    }
+    ,
+    {
+      path: '/detailproduct/:id',
+      name: 'detailproduct',
+      component: detailproduct
+    }
+    ,
+    {
+      path: '/productnouser',
+      name: 'productnouser',
+      component: productnouser
+    }
+    ,
+    {
+      path: '/homenouser',
+      name: 'homenouser',
+      component: homenouser
     }
 
   ]
