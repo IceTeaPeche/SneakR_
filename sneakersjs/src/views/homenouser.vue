@@ -1,7 +1,7 @@
 <template >
-    <div class="bg-gray-100">
+  
 
-        <header class="lg:px-16 px-6 bg-white flex flex-wrap items-center lg:py-0 mt-3 py-2">
+        <header class="lg:px-16 px-6 bg-white flex flex-wrap items-center lg:py-0 mt-3 py-2 mb-3">
             <div class="flex-1 flex justify-between items-center">
                 <a class="flex items-center space-x-3 rtl:space-x-reverse">
                     <span class="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">Sneakers</span>
@@ -43,15 +43,18 @@
                             reset</a>
                         <a href="#" class="block px-4 py-2 text-gray-800 hover:bg-blue-600 hover:text-white">Password
                             forgot</a>
-                        <a href="#" class="block px-4 py-2 text-gray-800 hover:bg-blue-600 hover:text-white">
-                            <router-link to="/login">Sign out</router-link>
+                        <a href="/login" class="block px-4 py-2 text-gray-800 hover:bg-blue-600 hover:text-white">
+                            Login
                         </a>
                     </div>
                 </div>
 
             </div>
 
+  
         </header>
+
+        <div class="bg-gray-100">
         <img id="jordan" src="../assets/Air_Jordan_4_Retro_Tour_Yellow_Sneaker_POlitics_LIFESTYLE-07.jpg.webp"
             alt="Carousel item" />
 
@@ -92,8 +95,7 @@
                 Voir plus
             </a>
         </div>
-
-
+    </div>
 
 
         <footer class="bg-white  shadow dark:bg-gray-900 flex justify-center mt-10">
@@ -128,7 +130,7 @@
 
 
 
-    </div>
+   
 </template>
 
 
@@ -216,13 +218,14 @@ export default {
 </script>
 
 <style scoped>
-section {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    padding-left: 1.5%;
-    gap: 15px;
-    margin-top: 25px;
 
+section{
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(235px,1fr));
+    padding-left: 1.5%;
+    gap: 20px;
+    margin-top: 35px;
+    padding-top: 40px;
 }
 
 img#jordan {

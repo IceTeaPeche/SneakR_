@@ -37,8 +37,8 @@
         <div class="absolute hidden mt-9 py-2 w-48 bg-white rounded-lg shadow-xl group-hover:block left-[-120px]">
             <a href="#" class="block px-4 py-2 text-gray-800 hover:bg-blue-600 hover:text-white">Password reset</a>
             <a href="#" class="block px-4 py-2 text-gray-800 hover:bg-blue-600 hover:text-white">Password forgot</a>
-            <a href="#" class="block px-4 py-2 text-gray-800 hover:bg-blue-600 hover:text-white">   
-               <router-link to="/login" >Sign out</router-link> 
+            <a href="/login" class="block px-4 py-2 text-gray-800 hover:bg-blue-600 hover:text-white">   
+               Sign out
             </a>
         </div>
     </div>
@@ -55,7 +55,7 @@
 
 
 
-<div class="flex justify-center">
+<div class="flex justify-center mt-4">
     <div class="w-1/2">
         <input type="text" v-model="search" v-on:change="fetchData()" placeholder="Search..." class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500">
     </div>
@@ -68,10 +68,10 @@
 
 <section>
     <article v-for="data in datas" :key="data.id">
-         <div class="w-60 max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700"  @click="goToProductDetail(data.id)">
+         <div class="w-60 max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700"  >
             
           <a href="#">
-              <img class="p-8 rounded-t-lg" :src="data.smallImage" width="700px" height="700px"  />
+              <img class="p-8 rounded-t-lg" :src="data.smallImage" width="700px" height="700px" @click="goToProductDetail(data.id)" />
           </a>
           <div class="px-3 pb-5">
               <a href="#">
@@ -188,8 +188,21 @@ export default {
    
     methods: {
 
-         goToProductDetail(id) {
-            this.$router.push(`/detailproduct/${id}`);
+        goToProductDetail(id) {
+            const path = window.location.pathname;
+
+            const match = path.match(/\/product\/([^\/]+)\/([^\/]+)\/([^\/]+)/);
+
+            if (!match || match.length < 4) {
+                console.error('Unable to extract userId, identifier, or userTokens from the URL');
+                return;
+            }
+
+            const userId = match[1];
+            const identifier = match[2];
+            const userTokens = match[3];
+            
+            this.$router.push(`/detailproduct/${id}/${userId}/${identifier}/${userTokens}`);
         },
 
 

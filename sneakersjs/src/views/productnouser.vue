@@ -38,8 +38,8 @@
                 <div class="absolute hidden mt-9 py-2 w-48 bg-white rounded-lg shadow-xl group-hover:block left-[-120px]">
                     <a href="#" class="block px-4 py-2 text-gray-800 hover:bg-blue-600 hover:text-white">Password reset</a>
                     <a href="#" class="block px-4 py-2 text-gray-800 hover:bg-blue-600 hover:text-white">Password forgot</a>
-                    <a href="#" class="block px-4 py-2 text-gray-800 hover:bg-blue-600 hover:text-white">
-                        <router-link to="/login">Sign out</router-link>
+                    <a href="/login" class="block px-4 py-2 text-gray-800 hover:bg-blue-600 hover:text-white">
+                        Login
                     </a>
                 </div>
             </div>
@@ -56,7 +56,7 @@
 
 
 
-    <div class="flex justify-center">
+    <div class="flex justify-center mt-3">
         <div class="w-1/2">
             <input type="text" v-model="search" v-on:change="fetchData()" placeholder="Search..."
                 class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500">
@@ -274,9 +274,10 @@ article {
 
 }
 
-section {
+
+section{
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(235px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(235px,1fr));
     padding-left: 1.5%;
     gap: 20px;
     margin-top: 35px;

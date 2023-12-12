@@ -1,7 +1,7 @@
 <template >
- <div class="bg-gray-100">
+ <div >
       
-         <header class="lg:px-16 px-6 bg-white flex flex-wrap items-center lg:py-0 mt-3 py-2">
+         <header class="lg:px-16 px-9 bg-white flex flex-wrap items-center lg:py-0 mt-3 py-2 mb-3">
           <div class="flex-1 flex justify-between items-center">
             <a class="flex items-center space-x-3 rtl:space-x-reverse">
                     <span class="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">Sneakers</span>
@@ -37,8 +37,8 @@
           <div class="absolute hidden mt-9 py-2 w-48 bg-white rounded-lg shadow-xl group-hover:block left-[-120px]">
               <a href="#" class="block px-4 py-2 text-gray-800 hover:bg-blue-600 hover:text-white">Password reset</a>
               <a href="#" class="block px-4 py-2 text-gray-800 hover:bg-blue-600 hover:text-white">Password forgot</a>
-              <a href="#" class="block px-4 py-2 text-gray-800 hover:bg-blue-600 hover:text-white">   
-                 <router-link to="/login" >Sign out</router-link> 
+              <a href="/login" class="block px-4 py-2 text-gray-800 hover:bg-blue-600 hover:text-white">   
+                 Sign out
               </a>
           </div>
       </div>
@@ -46,14 +46,17 @@
         </div>
 
         </header>
-  <img id="jordan" src="../assets/Air_Jordan_4_Retro_Tour_Yellow_Sneaker_POlitics_LIFESTYLE-07.jpg.webp" alt="Carousel item" />
+
+    <div class="bg-gray-100">
+  <img id="jordan"  src="../assets/Air_Jordan_4_Retro_Tour_Yellow_Sneaker_POlitics_LIFESTYLE-07.jpg.webp" alt="Carousel item" />
+
 
 
   <h1 class="text-center text-7xl mt-8 font-bold">Collection balenciaga</h1>
 
             <section>
       <article v-for="data in datas" :key="data.id">
-           <div class="w-60 max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+           <div class="w-60 max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700"  @click="goToProductDetail(data.id)">
             
             <a href="#">
                 <img class="p-8 rounded-t-lg" :src="data.smallImage" width="700px" height="700px" />
@@ -83,7 +86,7 @@
       </div>
 
 
-            
+  </div>   
 
    <footer class="bg-white  shadow dark:bg-gray-900 flex justify-center mt-10">
               <div class="w-full max-w-screen-xl mx-auto p-4 md:py-8">
@@ -141,6 +144,24 @@ export default {
   },
 
   methods: {
+
+     goToProductDetail(id) {
+      const path = window.location.pathname;
+
+      const match = path.match(/\/home\/([^\/]+)\/([^\/]+)\/([^\/]+)/);
+
+      if (!match || match.length < 4) {
+        console.error('Unable to extract userId, identifier, or userTokens from the URL');
+        return;
+      }
+
+      const userId = match[1];
+      const identifier = match[2];
+      const userTokens = match[3];
+
+      this.$router.push(`/detailproduct/${id}/${userId}/${identifier}/${userTokens}`);
+    },
+
 
   async fetchData() {
       try {

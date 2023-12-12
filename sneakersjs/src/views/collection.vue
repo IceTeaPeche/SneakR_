@@ -37,8 +37,8 @@
           <div class="absolute hidden mt-9 py-2 w-48 bg-white rounded-lg shadow-xl group-hover:block left-[-120px]">
               <a href="#" class="block px-4 py-2 text-gray-800 hover:bg-blue-600 hover:text-white">Password reset</a>
               <a href="#" class="block px-4 py-2 text-gray-800 hover:bg-blue-600 hover:text-white">Password forgot</a>
-              <a href="#" class="block px-4 py-2 text-gray-800 hover:bg-blue-600 hover:text-white">   
-                 <router-link to="/login" >Sign out</router-link> 
+              <a href="/login" class="block px-4 py-2 text-gray-800 hover:bg-blue-600 hover:text-white">   
+               /login 
               </a>
           </div>
       </div>
@@ -48,7 +48,7 @@
 
 
 
-  <div class="flex justify-center">
+  <div class="flex justify-center mt-4">
     <div class="w-1/2">
       <input type="text" v-model="search" v-on:change="fetchData()" placeholder="Search..."
         class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500">
@@ -60,9 +60,9 @@
 
   <section>
     <article v-for="data in datas" :key="data.id">
-      <div class="w-60 max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+       <div class="w-60 max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700"  >
         <a href="#">
-          <img class="p-8 rounded-t-lg" :src="data.smallImage" width="700px" height="700px"/>
+          <img class="p-8 rounded-t-lg " :src="data.smallImage" width="700px" height="700px" @click="goToProductDetail(data.id)"/>
         </a>
         <div class="px-3 pb-5">
           <a href="#">
@@ -74,11 +74,9 @@
         <div class="flex items-center justify-between">
           <span class="text-3xl font-bold text-gray-900 dark:text-white ml-3">{{ data.attributes.retailPrice }} €</span>
           <div class="flex">
-          <a href="#" @click="addToCollection(data)">
-              <img class="w-7 h-7 mr-2" src="../assets/wishlist.png" alt="">
-            </a>
-          <a href="#" @click="addToCollection(data)">
-            <img class="w-7 h-7 mr-2" src="../assets/heart.png" alt="">
+         
+          <a href="#" @click="removeCollection(data.id)">
+            <img class="w-7 h-7 mr-2" src="../assets/4812459.png" alt="">
           </a>
           </div>
 
@@ -129,10 +127,13 @@ export default {
   data() {
     return {
       datas: [],
+      data: [],
       currentPage: 1,
       totalPages: 1950,
       search: '',
+      token : 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NCwiaWF0IjoxNzAyMDY5NDYxLCJleHAiOjE3MDQ2NjE0NjF9.Why-Ql0PH04uSjmKx0MEGxZXap4B8rhIxz7_2B4VUcE'
       
+
 
     };
   },
@@ -141,19 +142,19 @@ export default {
 
     async fetchData() {
 
-      const userId = this.$route.params.userId; 
+      const userId = this.$route.params.userId;
       console.log(userId)
-      const name = this.$route.params.identifier; 
+      const name = this.$route.params.identifier;
       try {
-        this.datas = []; // Initialise the datas array
 
-       
-          const response = await fetch(`http://localhost:1337/api/snickers?populate[0]=collection&filters[$and][0][collection][username][$eq]=${name}`);
-          const data = await response.json();
-          const filteredData = data.data.filter(item => item.attributes.collection.data.some(collectionItem => collectionItem.id == userId));
 
-          // Add the filtered data to the datas array
-          this.datas = [...this.datas, ...filteredData];
+
+        const response = await fetch(`http://localhost:1337/api/snickers?populate[0]=collection&filters[$and][0][collection][username][$eq]=${name}`);
+        const data = await response.json();
+        const filteredData = data.data.filter(item => item.attributes.collection.data.some(collectionItem => collectionItem.id == userId));
+
+        // Add the filtered data to the datas array
+        this.datas = [...this.datas, ...filteredData];
 
         // Log the total number of items fetched
         console.log(`${this.datas.length} items have been fetched in total`);
@@ -181,7 +182,7 @@ export default {
       });
     },
 
-   
+
 
     pushproduct() {
       const path = window.location.pathname;
@@ -243,25 +244,125 @@ export default {
       this.$router.push(`/wishlist/${Id}/${name}/${jwt}`);
     },
 
+
+
+
+
+
+    goToProductDetail(id) {
+      const path = window.location.pathname;
+
+      const match = path.match(/\/collection\/([^\/]+)\/([^\/]+)\/([^\/]+)/);
+
+      if (!match || match.length < 4) {
+        console.error('Unable to extract userId, identifier, or userTokens from the URL');
+        return;
+      }
+
+      const userId = match[1];
+      const identifier = match[2];
+      const userTokens = match[3];
+
+      this.$router.push(`/detailproduct/${id}/${userId}/${identifier}/${userTokens}`);
+    },
+
+
+
+    async removeCollection(id) {
+      try {
+
+        const path = window.location.pathname;
+
+        const match = path.match(/\/collection\/([^\/]+)\/([^\/]+)\/([^\/]+)/);
+
+        if (!match || match.length < 4) {
+          console.error('Unable to extract userId, identifier, or userTokens from the URL');
+          return;
+        }
+
+        const userId = match[1];
+        const identifier = match[2];
+        const userTokens = match[3];
+
+
+
+        
+        const getSneakerOption = {
+          method: "get",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: this.token,
+          },
+        };
+        let datas = await fetch(`http://localhost:1337/api/snickers/${id}?populate=*`,
+          getSneakerOption
+        );
+        datas = await datas.json();
+        console.log(datas);
+        const collectionContent = [];
+        datas.data.attributes.collection.data.forEach((element) => {
+          collectionContent.push(element.id);
+        });
+        console.log(collectionContent);
+        const index = collectionContent.indexOf(userId);
+
+        const x = collectionContent.splice(index, 0);
+        console.log(x);
+        const requestOptions = {
+          method: "put",
+          body: JSON.stringify({
+            data: {
+              collection: x,
+            },
+          }),
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: this.token,
+          },
+        };
+
+        const response = await fetch(`http://localhost:1337/api/snickers/${id}`,
+          requestOptions
+        );
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${ response.status }`
+          );
+        }
+        console.log(response);
+        const data = await response.json();
+        console.log(data);
+        
+        window.location.reload();
+      } catch (error) {
+        console.error("Error during login:", error);
+      }
+    }
+  },
+
+
+async mounted() {
+        await this.fetchData();
+      },
+}
     
 
-  },
-  async mounted() {
-    await this.fetchData();
-  },
 
-
-}
 </script>
 
 <style scoped>
-section {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  padding-left: 1.5%;
-  gap: 15px;
-  margin-top: 25px;
 
+article{
+  margin-top: 20px;
+
+}
+
+section{
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(235px,1fr));
+    padding-left: 1.5%;
+    gap: 20px;
+    margin-top: 35px;
+    padding-top: 40px;
 }
 
 h5 {
@@ -294,9 +395,6 @@ span {
    float: right;
    
 }
-
-
-
 
 
 
