@@ -3,7 +3,7 @@
 
 ## Description
 
-Ce projet utilise principalement Strapi et vuejs pour créer un site web qui regroupe la plupart des sneakers qu'on peut retrouver dans le marché, on ne peut pas acheter mais  on peut les ajouter dans une collection si on les a déjà ou les ajouter dans une wishlist si on les veux. 
+Ce projet utilise principalement Strapi, tailwind et vuejs pour créer un site web qui regroupe la plupart des sneakers qu'on peut retrouver dans le marché, on ne peut pas acheter mais  on peut les ajouter dans une collection si on les a déjà ou les ajouter dans une wishlist si on les veux. 
 
 
 ## Prérequis
