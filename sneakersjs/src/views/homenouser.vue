@@ -3,9 +3,9 @@
 
         <header class="lg:px-16 px-6 bg-white flex flex-wrap items-center lg:py-0 mt-3 py-2 mb-3">
             <div class="flex-1 flex justify-between items-center">
-                <a class="flex items-center space-x-3 rtl:space-x-reverse">
-                    <span class="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">Sneakers</span>
-                </a>
+               
+                    <span class="flex items-center space-x-3 rtl:space-x-reverse self-center text-2xl font-semibold whitespace-nowrap dark:text-white">Sneakers</span>
+                
             </div>
 
             <label for="menu-toggle" class="pointer-cursor lg:hidden block"><svg class="fill-current text-gray-900"
@@ -90,10 +90,10 @@
         </section>
 
         <div class="flex justify-center mt-6">
-            <a @click="pushproduct" href="#" class="bg-white-500 text-gray-700 Lugrasimo py-2 px- rounded mr-0"
+            <span @click="pushproduct" href="#" class="bg-white-500 text-gray-700 Lugrasimo py-2 px- rounded mr-0"
                 style="font-family: 'Your Custom Font', sans-serif;">
                 Voir plus
-            </a>
+        </span>
         </div>
     </div>
 
@@ -121,7 +121,8 @@
                 </div>
                 <hr class="my-6 border-gray-200 sm:mx-auto dark:border-gray-700 lg:my-8" />
                 <span class="block text-sm text-gray-500 sm:text-center dark:text-gray-400">
-                    <a class="hover:underline">Sneakers</a>. All Rights Reserved.
+                    
+                    Sneakers. All Rights Reserved.
                 </span>
             </div>
         </footer>
