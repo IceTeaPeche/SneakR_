@@ -59,9 +59,9 @@
 
         <section>
       <article v-for="data in datas" :key="data.id">
-         <div class="w-60 max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700"  @click="goToProductDetail(data.id)">
+         <div class="w-60 max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700"  >
           <a href="#">
-            <img class="p-8 rounded-t-lg" :src="data.smallImage" width="700px" height="700px" />
+            <img class="p-8 rounded-t-lg" :src="data.smallImage" width="700px" height="700px" @click="goToProductDetail(data.id)"/>
           </a>
           <div class="px-3 pb-5">
             <a href="#">
@@ -73,12 +73,9 @@
           <div class="flex items-center justify-between">
             <span class="text-3xl font-bold text-gray-900 dark:text-white ml-3">{{ data.attributes.retailPrice }} €</span>
             <div class="flex">
-            <a href="#" @click="addToCollection(data)">
-                <img class="w-7 h-7 mr-2" src="../assets/wishlist.png" alt="">
+            <a href="#" @click="removeWishlist(data.id)">
+                <img class="w-7 h-7 mr-2" src="../assets/4812459.png" alt="icone for delete the product of the wishlist">
               </a>
-            <a href="#" @click="addToCollection(data)">
-              <img class="w-7 h-7 mr-2" src="../assets/heart.png" alt="">
-            </a>
             </div>
 
           </div>
@@ -288,7 +285,7 @@
             Authorization: this.token,
           },
         };
-        const datas = await fetch(`http://localhost:1337/api/snickers/${id}?populate=*`,
+        let datas = await fetch(`http://localhost:1337/api/snickers/${id}?populate=*`,
           requete
         );
         datas = await datas.json();
@@ -306,7 +303,7 @@
           method: "put",
           body: JSON.stringify({
             data: {
-              collection: newwishlist,
+              wishlist: newwishlist,
             },
           }),
           headers: {
@@ -315,7 +312,7 @@
           },
         };
 
-        const response = await fetch(`http://localhost:1337/api/snickers/${id}`,
+        let response = await fetch(`http://localhost:1337/api/snickers/${id}`,
           updaterequete
         );
         if (!response.ok) {

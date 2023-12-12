@@ -89,10 +89,10 @@
                         €</span>
                     <div class="flex">
                         <a href="#" @click="addToWishlist(data)">
-                            <img class="w-7 h-7 mr-2" src="../assets/wishlist.png" alt="">
+                            <img class="w-7 h-7 mr-2" src="../assets/wishlist.png" alt="icone for go in the wishlist">
                         </a>
                         <a href="#" @click="addToCollection(data)">
-                            <img class="w-7 h-7 mr-2" src="../assets/coeur-blanc.png" alt="">
+                            <img class="w-7 h-7 mr-2" src="../assets/coeur-blanc.png" alt="icone for go in the collection">
                         </a>
                     </div>
 

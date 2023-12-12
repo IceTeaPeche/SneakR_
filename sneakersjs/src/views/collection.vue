@@ -38,7 +38,7 @@
               <a href="#" class="block px-4 py-2 text-gray-800 hover:bg-blue-600 hover:text-white">Password reset</a>
               <a href="#" class="block px-4 py-2 text-gray-800 hover:bg-blue-600 hover:text-white">Password forgot</a>
               <a href="/login" class="block px-4 py-2 text-gray-800 hover:bg-blue-600 hover:text-white">   
-               /login 
+               Sign out
               </a>
           </div>
       </div>
@@ -76,7 +76,7 @@
           <div class="flex">
          
           <a href="#" @click="removeCollection(data.id)">
-            <img class="w-7 h-7 mr-2" src="../assets/4812459.png" alt="">
+            <img class="w-7 h-7 mr-2" src="../assets/4812459.png" alt="icone ben pour delete wishlist">
           </a>
           </div>
 
@@ -289,7 +289,7 @@ export default {
             Authorization: this.token,
           },
         };
-        const datas = await fetch(`http://localhost:1337/api/snickers/${id}?populate=*`,
+        let datas = await fetch(`http://localhost:1337/api/snickers/${id}?populate=*`,
           requete
         );
         datas = await datas.json();
@@ -316,7 +316,7 @@ export default {
           },
         };
 
-        const response = await fetch(`http://localhost:1337/api/snickers/${id}`,
+        let response = await fetch(`http://localhost:1337/api/snickers/${id}`,
           updaterequete
         );
         if (!response.ok) {

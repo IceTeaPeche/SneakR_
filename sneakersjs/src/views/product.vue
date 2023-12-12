@@ -71,7 +71,7 @@
          <div class="w-60 max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700"  >
             
           <a href="#">
-              <img class="p-8 rounded-t-lg" :src="data.smallImage" width="700px" height="700px" @click="goToProductDetail(data.id)" />
+              <img class="p-8 rounded-t-lg" :src="data.smallImage" width="700px" height="700px" alt="image of the product sneaker" @click="goToProductDetail(data.id)" />
           </a>
           <div class="px-3 pb-5">
               <a href="#">
@@ -84,10 +84,10 @@
                   <span class="text-3xl font-bold text-gray-900 dark:text-white ml-3">{{data.attributes.retailPrice}} €</span>
                   <div class="flex">
                         <a href="#" @click="addToWishlist(data)">
-                                        <img class="w-7 h-7 mr-2" src="../assets/wishlist.png" alt="">
+                                        <img class="w-7 h-7 mr-2" src="../assets/wishlist.png" alt="icone for go in wishlist">
                                     </a>
                         <a href="#" @click="addToCollection(data)">
-                                    <img class="w-7 h-7 mr-2" src="../assets/coeur-blanc.png" alt="">
+                                    <img class="w-7 h-7 mr-2" src="../assets/coeur-blanc.png" alt="icone for go in collection">
                                 </a>
                     </div>
                     

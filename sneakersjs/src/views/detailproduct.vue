@@ -65,7 +65,7 @@
                     <div class="w-full px-4 md:w-1/2 ">
                         <div class="sticky top-0 z-50 overflow-hidden ">
                             <div class="relative mb-6 lg:mb-10 lg:h-2/4 ">
-                                <img src="https://i.postimg.cc/PqYpFTfy/pexels-melvin-buezo-2529148.jpg" alt=""
+                                <img src="https://i.postimg.cc/PqYpFTfy/pexels-melvin-buezo-2529148.jpg" alt="image of product sneaker"
                                     class="object-cover w-full lg:h-full ">
                             </div>
             
@@ -175,10 +175,10 @@
                       <span class="text-3xl font-bold text-gray-900 dark:text-white ml-3">{{ datas.attributes.retailPrice }} €</span>
                       <div class="flex">
                             <a href="#" @click="addToWishlist(datas)">
-                                            <img class="w-7 h-7 mr-2" src="../assets/wishlist.png" alt="">
+                                            <img class="w-7 h-7 mr-2" src="../assets/wishlist.png" alt="icone for go in the wishlist">
                                         </a>
                             <a href="#" @click="addToCollection(datas)">
-                                        <img class="w-7 h-7 mr-2" src="../assets/coeur-blanc.png" alt="">
+                                        <img class="w-7 h-7 mr-2" src="../assets/coeur-blanc.png" alt="icone for go in the collection">
                                     </a>
                         </div>
                     
