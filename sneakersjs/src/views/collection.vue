@@ -281,38 +281,33 @@ export default {
         }
 
         const userId = match[1];
-        const identifier = match[2];
-        const userTokens = match[3];
-
-
-
-        
-        const getSneakerOption = {
+   
+        const requete = {
           method: "get",
           headers: {
             "Content-Type": "application/json",
             Authorization: this.token,
           },
         };
-        let datas = await fetch(`http://localhost:1337/api/snickers/${id}?populate=*`,
-          getSneakerOption
+        const datas = await fetch(`http://localhost:1337/api/snickers/${id}?populate=*`,
+          requete
         );
         datas = await datas.json();
         console.log(datas);
-        const collectionContent = [];
-        datas.data.attributes.collection.data.forEach((element) => {
-          collectionContent.push(element.id);
+        const updatecollection = [];
+        datas.data.attributes.collection.data.forEach((item) => {
+          updatecollection.push(item.id);
         });
-        console.log(collectionContent);
-        const index = collectionContent.indexOf(userId);
+        console.log(updatecollection);
+        const i = updatecollection.indexOf(userId);
 
-        const x = collectionContent.splice(index, 0);
-        console.log(x);
-        const requestOptions = {
+        const newcollection = updatecollection.splice(i, 0);
+        console.log(newcollection);
+        const updaterequete = {
           method: "put",
           body: JSON.stringify({
             data: {
-              collection: x,
+              collection: newcollection,
             },
           }),
           headers: {
@@ -322,19 +317,17 @@ export default {
         };
 
         const response = await fetch(`http://localhost:1337/api/snickers/${id}`,
-          requestOptions
+          updaterequete
         );
         if (!response.ok) {
-          throw new Error(`HTTP error! Status: ${ response.status }`
-          );
+          console.log("error");
         }
-        console.log(response);
         const data = await response.json();
         console.log(data);
         
         window.location.reload();
       } catch (error) {
-        console.error("Error during login:", error);
+        console.error("Error:", error);
       }
     }
   },

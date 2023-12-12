@@ -265,7 +265,71 @@
       this.$router.push(`/wishlist/${Id}/${name}/${jwt}`);
     },
 
-    },
+
+
+     async removeWishlist(id) {
+      try {
+
+        const path = window.location.pathname;
+
+        const match = path.match(/\/wishlist\/([^\/]+)\/([^\/]+)\/([^\/]+)/);
+
+        if (!match || match.length < 4) {
+          console.error('Unable to extract userId, identifier, or userTokens from the URL');
+          return;
+        }
+
+        const userId = match[1];
+
+        const requete = {
+          method: "get",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: this.token,
+          },
+        };
+        const datas = await fetch(`http://localhost:1337/api/snickers/${id}?populate=*`,
+          requete
+        );
+        datas = await datas.json();
+        console.log(datas);
+        const updatewishlist = [];
+        datas.data.attributes.wishlist.data.forEach((item) => {
+          updatewishlist.push(item.id);
+        });
+        console.log(updatewishlist);
+        const i = updatewishlist.indexOf(userId);
+
+        const newwishlist = updatewishlist.splice(i, 0);
+        console.log(newwishlist);
+        const updaterequete = {
+          method: "put",
+          body: JSON.stringify({
+            data: {
+              collection: newwishlist,
+            },
+          }),
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: this.token,
+          },
+        };
+
+        const response = await fetch(`http://localhost:1337/api/snickers/${id}`,
+          updaterequete
+        );
+        if (!response.ok) {
+          console.log("error");
+        }
+        const data = await response.json();
+        console.log(data);
+
+        window.location.reload();
+      } catch (error) {
+        console.error("Error:", error);
+      }
+    }
+  },
 
       async mounted() {
     await this.fetchData();
