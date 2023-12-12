@@ -34,7 +34,7 @@
                 </nav>
                 <div class="relative group inline-block lg:ml-6 flex lg:mb-0 mb-4 pointer-cursor">
                     <button class="flex items-center space-x-2">
-                        <img src="/Users/ethanledouble/github/SneakR_/sneakersjs/src/assets/login.png" alt="Your avatar"
+                        <img src="../assets/login.png" alt="Your avatar"
                             class="w-9 h-9 rounded-full border-1 border-transparent hover:border-blue-600">
                     </button>
                     <div
