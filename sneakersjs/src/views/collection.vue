@@ -283,7 +283,6 @@ export default {
         const userId = match[1];
    
         const requete = {
-          method: "get",
           headers: {
             "Content-Type": "application/json",
             Authorization: this.token,
