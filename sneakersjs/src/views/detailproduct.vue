@@ -65,7 +65,7 @@
                     <div class="w-full px-4 md:w-1/2 ">
                         <div class="sticky top-0 z-50 overflow-hidden ">
                             <div class="relative mb-6 lg:mb-10 lg:h-2/4 ">
-                                <img src="https://i.postimg.cc/PqYpFTfy/pexels-melvin-buezo-2529148.jpg" alt="image of product sneaker"
+                                <img :src=" smallImageUrl "
                                     class="object-cover w-full lg:h-full ">
                             </div>
             
@@ -126,20 +126,23 @@
                             <div class="w-550 mb-8 ">
                                 <label for=""
                                     class="w-full text-xl font-semibold text-gray-700 dark:text-gray-400">link </label>
-                                <div class="">
-                                   {{ datas.attributes.links   }}
+                                <div>
+                                   <a class="lien" :href="links">{{ links }}</a>
+                                   
                                 </div>
                             </div>
                             <div class="flex flex-wrap items-center -mx-4 ">
                                 <div class="w-full px-4 mb-4 lg:w-1/2 lg:mb-0">
                                     <button
-                                        class="flex items-center justify-center w-full p-4 text-blue-500 border border-blue-500 rounded-md dark:text-gray-200 dark:border-blue-600 hover:bg-blue-600 hover:border-blue-600 hover:text-gray-100 dark:bg-blue-600 dark:hover:bg-blue-700 dark:hover:border-blue-700 dark:hover:text-gray-300">
-                                        Add to Collection
-                                    </button>
+                                        class="flex items-center justify-center w-full p-4 text-blue-500 border border-blue-500 rounded-md dark:text-gray-200 dark:border-blue-600 hover:bg-blue-600 hover:border-blue-600 hover:text-gray-100 dark:bg-blue-600 dark:hover:bg-blue-700 dark:hover:border-blue-700 dark:hover:text-gray-300" 
+                                        @click="addToCollection(datas)">  Add to Collection</button>
+                                      
+                                 
                                 </div>
                                 <div class="w-full px-4 mb-4 lg:mb-0 lg:w-1/2">
                                     <button
-                                        class="flex items-center justify-center w-full p-4 text-blue-500 border border-blue-500 rounded-md dark:text-gray-200 dark:border-blue-600 hover:bg-blue-600 hover:border-blue-600 hover:text-gray-100 dark:bg-blue-600 dark:hover:bg-blue-700 dark:hover:border-blue-700 dark:hover:text-gray-300">
+                                        class="flex items-center justify-center w-full p-4 text-blue-500 border border-blue-500 rounded-md dark:text-gray-200 dark:border-blue-600 hover:bg-blue-600 hover:border-blue-600 hover:text-gray-100 dark:bg-blue-600 dark:hover:bg-blue-700 dark:hover:border-blue-700 dark:hover:text-gray-300"
+                                        @click="addToWishlist(datas)">
                                         Add to wishlist
                                     </button>
                                 </div>
@@ -154,40 +157,6 @@
 
 
 
-
-
-
-   <section v-if="datas && datas.attributes">
-        <article>
-             <div class="w-60 max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
-            
-              <a href="#">
-                  <img class="p-8 rounded-t-lg" :src="datas.smallImage" width="700px" height="700px"  />
-              </a>
-              <div class="px-3 pb-5">
-                  <a href="#">
-                      <h5 class="text-xl font-semibold trackin g-tight text-gray-900 dark:text-white">{{ datas.attributes.name }}</h5>
-                  </a>
-            </div>
-
-        
-                  <div class="flex items-center justify-between">
-                      <span class="text-3xl font-bold text-gray-900 dark:text-white ml-3">{{ datas.attributes.retailPrice }} €</span>
-                      <div class="flex">
-                            <a href="#" @click="addToWishlist(datas)">
-                                            <img class="w-7 h-7 mr-2" src="../assets/wishlist.png" alt="icone for go in the wishlist">
-                                        </a>
-                            <a href="#" @click="addToCollection(datas)">
-                                        <img class="w-7 h-7 mr-2" src="../assets/coeur-blanc.png" alt="icone for go in the collection">
-                                    </a>
-                        </div>
-                    
-
-                  
-                  </div>
-              </div>
-            </article>
-        </section>
 
 
 
@@ -247,7 +216,9 @@ export default {
             search: '',
             nombredeproduct: '25',
             filter1: '',
-            id : this.$route.params.id,
+            id: this.$route.params.id,
+            smallImageUrl: '',
+            links: '',
         };
     },
 
@@ -266,42 +237,45 @@ export default {
 
                 this.datas = data.data;
 
+                
+               
+                
+            
+              
           
 
                 console.log(this.datas, "les données ont été récupérées avec succès");
-                console.log(this.datas.attributes.image, "les données ont été récupérées avec succès");
+                console.log(this.datas.attributes.small_url, "les données ont été récupérées avec succès");
 
-                await Promise.all(
-                    this.datas.map(async (item) => {
-                        item.smallImage = await this.getSmallImage(item);
-                    })
-                );
             } catch (error) {
-                console.error('Une erreur s\'est produite lors de la récupération des données:', error);
+                console.error('An error occurred while fetching the data:', error);
+    
             }
         },
-      async getSmallImage(item) {
-            const imageProxy = JSON.parse(item.attributes.image.replace(/'/g, '"'));
-            const smallImage = imageProxy.small; // Change this line
+        
 
-            // Create a promise to handle the image loading
-            return new Promise((resolve) => {
-                const image = new Image();
-                image.src = smallImage;
-                image.onload = () => {
-                    // Resolve the promise once the image is loaded
-                    resolve(smallImage);
-                };
-            });
+
+       async getimage() {
+            try {
+                let imageString = this.datas.attributes.image;
+                let validJsonString = imageString.replace(/'/g, '"');
+                let imageObject = JSON.parse(validJsonString);
+                this.smallImageUrl = imageObject.small; // Assign the value to smallImageUrl
+            } catch (error) {
+                console.error('An error occurred while fetching the image:', error);
+            }
         },
 
-
-
-
-
-
-
-
+         async getlinks() {
+            try {
+                let linkstring = this.datas.attributes.links;
+                let validJsonString = linkstring.replace(/'/g, '"');
+                let imageObject = JSON.parse(validJsonString);
+                this.links = imageObject.goat; // Assign the value to smallImageUrl
+            } catch (error) {
+                console.error('An error occurred while fetching the image:', error);
+            }
+        },
 
 
 
@@ -311,16 +285,16 @@ export default {
 
                 const path = window.location.pathname;
 
-                const match = path.match(/\/product\/([^\/]+)\/([^\/]+)\/([^\/]+)/);
+                const match = path.match(/\/detailproduct\/(\d+)\/(\d+)\/(\w+)\/(.+)/);
 
                 if (!match || match.length < 4) {
                     console.error('Unable to extract userId, identifier, or userTokens from the URL');
                     return;
                 }
 
-                const userId = match[1];
-                const identifier = match[2];
-                const userTokens = match[3];
+                const userId = match[2];
+                const identifier = match[3];
+                const userTokens = match[4];
 
                 console.log('userId:', userId);
                 console.log('userTokens:', userTokens);
@@ -357,16 +331,16 @@ export default {
             try {
                 const path = window.location.pathname;
 
-                const match = path.match(/\/product\/([^\/]+)\/([^\/]+)\/([^\/]+)/);
+                const match = path.match(/\/detailproduct\/(\d+)\/(\d+)\/(\w+)\/(.+)/)
 
                 if (!match || match.length < 4) {
                     console.error('Unable to extract userId, identifier, or userTokens from the URL');
                     return;
                 }
 
-                const userId = match[1];
-                const identifier = match[2];
-                const userTokens = match[3];
+                const userId = match[2];
+                const identifier = match[3];
+                const userTokens = match[4];
 
                 console.log('userId:', userId);
                 console.log('userTokens:', userTokens);
@@ -476,10 +450,14 @@ export default {
     },
     async mounted() {
         await this.fetchData();
+        this.getlinks(); // Call getimage after fetching data
+        this.getimage(); // Call getimage after fetching data
+
     },
+};
 
 
-}
+
 </script>
 
 <style scoped>
@@ -520,6 +498,10 @@ span {
 
 
 
+}
+
+a.lien {
+    font-size: 10px;
 }
 
 
