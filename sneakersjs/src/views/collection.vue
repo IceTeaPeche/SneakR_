@@ -62,7 +62,7 @@
     <article v-for="data in datas" :key="data.id">
        <div class="w-60 max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700"  >
         <a href="#">
-          <img class="p-8 rounded-t-lg " :src="data.smallImage" width="700px" height="700px" @click="goToProductDetail(data.id)"/>
+          <img class="p-8 rounded-t-lg " :src="data.smallImage || '../assets/noproduct.png'" width="700px" height="700px" @click="goToProductDetail(data.id)"/>
         </a>
         <div class="px-3 pb-5">
           <a href="#">

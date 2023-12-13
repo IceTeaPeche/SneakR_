@@ -74,7 +74,7 @@
                 @click="goToProductDetail(data.id)">
 
                 <a href="#">
-                    <img class="p-8 rounded-t-lg" :src="data.smallImage" width="700px" height="700px" />
+                    <img class="p-8 rounded-t-lg" :src="data.smallImage || '../assets/noproduct.png'" width="700px" height="700px" />
                 </a>
                 <div class="px-3 pb-5">
                     <a href="#">

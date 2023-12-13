@@ -71,13 +71,16 @@
          <div class="w-60 max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700"  >
             
           <a href="#">
-              <img class="p-8 rounded-t-lg" :src="data.smallImage" width="700px" height="700px" alt="image of the product sneaker" @click="goToProductDetail(data.id)" />
+              <img class="p-8 rounded-t-lg" :src="data.smallImage || '../assets/noproduct.png'" width="700px" height="700px" alt="image of the product sneaker" @click="goToProductDetail(data.id)" />
           </a>
           <div class="px-3 pb-5">
               <a href="#">
                   <h5 class="text-xl font-semibold trackin g-tight text-gray-900 dark:text-white">{{data.attributes.name}}</h5>
               </a>
         </div>
+
+    
+
 
         
               <div class="flex items-center justify-between">

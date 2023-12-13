@@ -60,12 +60,12 @@
     </header>
 
     <section class="overflow-hidden bg-white py-11 font-poppins dark:bg-gray-800 " v-if="datas && datas.attributes">
-            <div class="max-w-6xl px-4 py-4 mx-auto lg:py-8 md:px-6">
+            <div class="max-w-7.5xl px-4 py-4 mx-auto lg:py-8 md:px-6">
                 <div class="flex flex-wrap -mx-4">
                     <div class="w-full px-4 md:w-1/2 ">
                         <div class="sticky top-0 z-50 overflow-hidden ">
                             <div class="relative mb-6 lg:mb-10 lg:h-2/4 ">
-                                <img :src=" smallImageUrl "
+                                <img :src=" smallImageUrl || '../assets/noproduct.png'" alt="image of product sneakers"
                                     class="object-cover w-full lg:h-full ">
                             </div>
             
@@ -126,10 +126,21 @@
                             <div class="w-550 mb-8 ">
                                 <label for=""
                                     class="w-full text-xl font-semibold text-gray-700 dark:text-gray-400">link </label>
-                                <div>
-                                   <a class="lien" :href="links">{{ links }}</a>
+                                <div class="flex">
+                                    <p>Goat : </p>
+                                   <a class="lien mt-1 ml-1" :href="links_goat">{{ links_goat }}</a>
                                    
                                 </div>
+                                <div class="flex">
+                                        <p>StockX : </p>
+                                       <a class="lien mt-1 ml-1" :href="links_stoxkX">{{ links_stoxkX }}</a>
+                                   
+                                    </div>
+                                    <div class="flex">
+                                        <p>flightClub : </p>
+                                       <a class="lien mt-1 ml-1" :href="links_flightClub">{{ links_flightClub }}</a>
+                                   
+                                    </div>
                             </div>
                             <div class="flex flex-wrap items-center -mx-4 ">
                                 <div class="w-full px-4 mb-4 lg:w-1/2 lg:mb-0">
@@ -218,7 +229,9 @@ export default {
             filter1: '',
             id: this.$route.params.id,
             smallImageUrl: '',
-            links: '',
+            links_goat: '',
+            links_stoxkX: '',
+            links_flightClub: '',
         };
     },
 
@@ -271,7 +284,9 @@ export default {
                 let linkstring = this.datas.attributes.links;
                 let validJsonString = linkstring.replace(/'/g, '"');
                 let imageObject = JSON.parse(validJsonString);
-                this.links = imageObject.goat; // Assign the value to smallImageUrl
+                this.links_goat = imageObject.goat;
+                this.links_stoxkX = imageObject.stockX;
+                this.links_flightClub = imageObject.flightClub;// Assign the value to smallImageUrl
             } catch (error) {
                 console.error('An error occurred while fetching the image:', error);
             }
@@ -485,6 +500,14 @@ span {
     display: block;
 }
 
+a.lien {
+    font-size: 12px;
+
+}
+
+a.lien:hover {
+    color: blue;
+}
 
 @media (max-width: 1023px) {
 
@@ -500,9 +523,7 @@ span {
 
 }
 
-a.lien {
-    font-size: 10px;
-}
+
 
 
 @media (max-width: 767px) {
